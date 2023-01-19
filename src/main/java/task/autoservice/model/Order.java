@@ -36,9 +36,9 @@ public class Order {
     @OneToOne(fetch = FetchType.LAZY)
     private Car car;
     @ManyToMany
-    private List<Service> services;
+    private List<CarService> carServices;
     @ManyToMany
-    private List<Goods> goods;
+    private List<CarPart> carParts;
 
     enum OrderStatus {
         ACCEPTED,
@@ -58,8 +58,8 @@ public class Order {
                 + ", completionDate=" + completionDate
                 + ", status=" + status
                 + ", car=" + car
-                + ", services=" + services
-                + ", goods=" + goods
+                + ", carServices=" + carServices
+                + ", carParts=" + carParts
                 + '}';
     }
 }

@@ -1,9 +1,12 @@
 package task.autoservice.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,20 +18,26 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "goods")
-public class Goods {
+@Table(name = "car_services")
+public class CarService {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
     private BigDecimal price;
+    @Column(name = "is_paid")
+    private Boolean paidStatus;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Order order;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Repairer repairer;
 
     @Override
     public String toString() {
-        return "Goods{"
+        return "Service{"
                 + "id=" + id
-                + ", name='" + name + '\''
                 + ", price=" + price
+                + ", order=" + order
+                + ", repairer=" + repairer
                 + '}';
     }
 }
