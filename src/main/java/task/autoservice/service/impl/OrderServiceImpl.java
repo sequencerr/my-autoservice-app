@@ -5,9 +5,16 @@ import org.springframework.stereotype.Service;
 import task.autoservice.model.Order;
 import task.autoservice.service.OrderService;
 
+import java.util.List;
+
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
     public OrderServiceImpl(JpaRepository<Order, Long> repository) {
         super(repository);
+    }
+
+    @Override
+    public List<Order> findAllWithIds(List<Long> ids) {
+        return repository.findAllById(ids);
     }
 }
