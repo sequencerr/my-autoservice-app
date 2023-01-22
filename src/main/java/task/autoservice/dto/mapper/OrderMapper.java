@@ -25,6 +25,10 @@ public class OrderMapper {
         this.carServiceService = carServiceService;
     }
 
+    public Order toModel(OrderRequestDto requestDto) {
+        return toModel(null, requestDto);
+    }
+
     public Order toModel(Long id, OrderRequestDto requestDto) {
         Order order = new Order();
         order.setId(id);

@@ -7,6 +7,10 @@ import task.autoservice.model.CarPart;
 
 @Component
 public class CarPartMapper {
+    public CarPart toModel(CarPartRequestDto requestDto) {
+        return toModel(null, requestDto);
+    }
+
     public CarPart toModel(Long id, CarPartRequestDto requestDto) {
         CarPart carPart = new CarPart();
         carPart.setId(id);

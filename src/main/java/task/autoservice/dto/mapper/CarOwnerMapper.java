@@ -19,6 +19,10 @@ public class CarOwnerMapper {
         this.orderService = orderService;
     }
 
+    public CarOwner toModel(CarOwnerRequestDto requestDto) {
+        return toModel(null, requestDto);
+    }
+
     public CarOwner toModel(Long id, CarOwnerRequestDto requestDto) {
         CarOwner owner = new CarOwner();
         owner.setId(id);

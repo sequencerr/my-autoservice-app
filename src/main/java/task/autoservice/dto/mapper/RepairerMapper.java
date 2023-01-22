@@ -6,7 +6,6 @@ import task.autoservice.dto.response.RepairerResponseDto;
 import task.autoservice.model.Order;
 import task.autoservice.model.Repairer;
 import task.autoservice.service.OrderService;
-import task.autoservice.service.RepairerService;
 
 @Component
 public class RepairerMapper {
@@ -14,6 +13,10 @@ public class RepairerMapper {
 
     public RepairerMapper(OrderService orderService) {
         this.orderService = orderService;
+    }
+
+    public Repairer toModel(RepairerRequestDto requestDto) {
+        return toModel(null, requestDto);
     }
 
     public Repairer toModel(Long id, RepairerRequestDto requestDto) {

@@ -17,6 +17,10 @@ public class CarServiceMapper {
         this.repairerService = repairerService;
     }
 
+    public CarService toModel(CarServiceRequestDto requestDto) {
+        return toModel(null, requestDto);
+    }
+
     public CarService toModel(Long id, CarServiceRequestDto requestDto) {
         CarService service = new CarService();
         service.setId(id);
