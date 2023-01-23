@@ -13,19 +13,19 @@ import task.autoservice.dto.request.CarOwnerRequestDto;
 import task.autoservice.dto.response.CarOwnerResponseDto;
 import task.autoservice.dto.response.OrderResponseDto;
 import task.autoservice.model.CarOwner;
-import task.autoservice.service.CarOwnerService;
+import task.autoservice.service.GenericService;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/car-owners")
 public class CarOwnerController {
-    private final CarOwnerService carOwnerService;
+    private final GenericService<CarOwner> carOwnerService;
     private final CarOwnerMapper carOwnerMapper;
     private final OrderMapper orderMapper;
 
     public CarOwnerController(
-            CarOwnerService carOwnerService,
+            GenericService<CarOwner> carOwnerService,
             CarOwnerMapper carOwnerMapper,
             OrderMapper orderMapper
     ) {

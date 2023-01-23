@@ -4,13 +4,14 @@ import org.springframework.stereotype.Component;
 import task.autoservice.dto.request.CarRequestDto;
 import task.autoservice.dto.response.CarResponseDto;
 import task.autoservice.model.Car;
-import task.autoservice.service.CarOwnerService;
+import task.autoservice.model.CarOwner;
+import task.autoservice.service.GenericService;
 
 @Component
 public class CarMapper {
-    private final CarOwnerService carOwnerService;
+    private final GenericService<CarOwner> carOwnerService;
 
-    public CarMapper(CarOwnerService carOwnerService) {
+    public CarMapper(GenericService<CarOwner> carOwnerService) {
         this.carOwnerService = carOwnerService;
     }
 

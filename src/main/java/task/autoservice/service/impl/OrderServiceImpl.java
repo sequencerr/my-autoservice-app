@@ -4,10 +4,10 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
+import task.autoservice.model.CarPart;
 import task.autoservice.model.Order;
 import task.autoservice.model.Order.OrderStatus;
-import task.autoservice.repository.OrderRepository;
-import task.autoservice.service.CarPartService;
+import task.autoservice.service.GenericService;
 import task.autoservice.service.OrderService;
 
 import java.math.BigDecimal;
@@ -17,9 +17,9 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     private static final double DISCOUNT_PERCENTAGE_PER_SERVICE = 0.02;
     private static final double DISCOUNT_PERCENTAGE_PER_PART = 0.01;
     private static final BigDecimal ONLY_DIAGNOSE_PRICE = BigDecimal.valueOf(500);
-    private final CarPartService carPartService;
+    private final GenericService<CarPart> carPartService;
 
-    public OrderServiceImpl(JpaRepository<Order, Long> repository, CarPartService carPartService) {
+    public OrderServiceImpl(JpaRepository<Order, Long> repository, GenericService<CarPart> carPartService) {
         super(repository);
         this.carPartService = carPartService;
     }

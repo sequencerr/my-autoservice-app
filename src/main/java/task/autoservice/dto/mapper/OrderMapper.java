@@ -3,21 +3,21 @@ package task.autoservice.dto.mapper;
 import org.springframework.stereotype.Component;
 import task.autoservice.dto.request.OrderRequestDto;
 import task.autoservice.dto.response.OrderResponseDto;
+import task.autoservice.model.Car;
 import task.autoservice.model.CarPart;
 import task.autoservice.model.Order;
-import task.autoservice.service.CarService;
-import task.autoservice.service.CarPartService;
 import task.autoservice.service.CarServiceService;
+import task.autoservice.service.GenericService;
 
 @Component
 public class OrderMapper {
-    private final CarService carService;
-    private final CarPartService carPartService;
+    private final GenericService<Car> carService;
+    private final GenericService<CarPart> carPartService;
     private final CarServiceService carServiceService;
 
     public OrderMapper(
-            CarService carService,
-            CarPartService carPartService,
+            GenericService<Car> carService,
+            GenericService<CarPart> carPartService,
             CarServiceService carServiceService
     ) {
         this.carService = carService;

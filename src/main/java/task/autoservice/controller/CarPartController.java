@@ -10,15 +10,15 @@ import task.autoservice.dto.mapper.CarPartMapper;
 import task.autoservice.dto.request.CarPartRequestDto;
 import task.autoservice.dto.response.CarPartResponseDto;
 import task.autoservice.model.CarPart;
-import task.autoservice.service.CarPartService;
+import task.autoservice.service.GenericService;
 
 @RestController
 @RequestMapping("/car-parts")
 public class CarPartController {
-    private final CarPartService carPartService;
+    private final GenericService<CarPart> carPartService;
     private final CarPartMapper carPartMapper;
 
-    public CarPartController(CarPartService carPartService, CarPartMapper carPartMapper) {
+    public CarPartController(GenericService<CarPart> carPartService, CarPartMapper carPartMapper) {
         this.carPartService = carPartService;
         this.carPartMapper = carPartMapper;
     }

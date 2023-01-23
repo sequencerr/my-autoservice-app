@@ -6,15 +6,15 @@ import task.autoservice.dto.response.CarOwnerResponseDto;
 import task.autoservice.model.Car;
 import task.autoservice.model.CarOwner;
 import task.autoservice.model.Order;
-import task.autoservice.service.CarService;
+import task.autoservice.service.GenericService;
 import task.autoservice.service.OrderService;
 
 @Component
 public class CarOwnerMapper {
-    private final CarService carService;
+    private final GenericService<Car> carService;
     private final OrderService orderService;
 
-    public CarOwnerMapper(CarService carService, OrderService orderService) {
+    public CarOwnerMapper(GenericService<Car> carService, OrderService orderService) {
         this.carService = carService;
         this.orderService = orderService;
     }
