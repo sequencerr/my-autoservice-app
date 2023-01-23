@@ -25,7 +25,7 @@ public class CarService extends IdentifiableEntity {
     private Long id;
     private BigDecimal price;
     @Column(name = "is_paid")
-    private Boolean paidStatus;
+    private Boolean isPaid;
     @ManyToOne(fetch = FetchType.LAZY)
     private Order order;
     @ManyToOne(fetch = FetchType.LAZY)

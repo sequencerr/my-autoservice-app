@@ -25,7 +25,7 @@ public class CarServiceMapper {
         CarService service = new CarService();
         service.setId(id);
         service.setPrice(requestDto.price());
-        service.setPaidStatus(requestDto.paidStatus());
+        service.setIsPaid(requestDto.isPaid());
         service.setOrder(orderService.getById(requestDto.orderId()));
         service.setRepairer(repairerService.getById(requestDto.repairerId()));
         return service;
@@ -35,7 +35,7 @@ public class CarServiceMapper {
         return new CarServiceResponseDto(
                 carService.getId(),
                 carService.getPrice(),
-                carService.getPaidStatus(),
+                carService.getIsPaid(),
                 carService.getOrder().getId(),
                 carService.getRepairer().getId());
     }

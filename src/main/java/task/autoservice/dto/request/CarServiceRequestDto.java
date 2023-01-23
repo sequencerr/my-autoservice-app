@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public record CarServiceRequestDto(
         BigDecimal price,
-        Boolean paidStatus,
+        Boolean isPaid,
         Long orderId,
         Long repairerId) {
 }
