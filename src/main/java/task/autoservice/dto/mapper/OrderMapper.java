@@ -34,8 +34,8 @@ public class OrderMapper {
         order.setId(id);
         order.setDescription(requestDto.description());
         order.setCar(carService.getById(requestDto.carId()));
-        order.setCarParts(carPartService.findAllWithIds(requestDto.carPartIds()));
-        order.setCarServices(carServiceService.findAllWithIds(requestDto.carServiceIds()));
+        order.setCarParts(carPartService.findAllById(requestDto.carPartIds()));
+        order.setCarServices(carServiceService.findAllById(requestDto.carServiceIds()));
         return order;
     }
 

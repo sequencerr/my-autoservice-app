@@ -10,7 +10,6 @@ import task.autoservice.service.CarPartService;
 import task.autoservice.service.OrderService;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
@@ -21,11 +20,6 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
         super(repository);
         this.repository = repository;
         this.carPartService = carPartService;
-    }
-
-    @Override
-    public List<Order> findAllWithIds(List<Long> ids) {
-        return repository.findAllById(ids);
     }
 
     @Override

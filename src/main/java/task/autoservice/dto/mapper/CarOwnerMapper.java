@@ -26,8 +26,8 @@ public class CarOwnerMapper {
     public CarOwner toModel(Long id, CarOwnerRequestDto requestDto) {
         CarOwner owner = new CarOwner();
         owner.setId(id);
-        owner.setCars(carService.findAllWithIds(requestDto.carIds()));
-        owner.setOrders(orderService.findAllWithIds(requestDto.orderIds()));
+        owner.setCars(carService.findAllById(requestDto.carIds()));
+        owner.setOrders(orderService.findAllById(requestDto.orderIds()));
         return owner;
     }
 

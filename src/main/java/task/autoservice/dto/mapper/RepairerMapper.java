@@ -23,7 +23,7 @@ public class RepairerMapper {
         Repairer repairer = new Repairer();
         repairer.setId(id);
         repairer.setFullName(requestDto.fullName());
-        repairer.setCompletedOrders(orderService.findAllWithIds(requestDto.completedOrderIds()));
+        repairer.setCompletedOrders(orderService.findAllById(requestDto.completedOrderIds()));
         return repairer;
     }
 
