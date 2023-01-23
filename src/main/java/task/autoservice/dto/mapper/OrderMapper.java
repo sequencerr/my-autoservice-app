@@ -33,10 +33,6 @@ public class OrderMapper {
         Order order = new Order();
         order.setId(id);
         order.setDescription(requestDto.description());
-        order.setTotalPrice(requestDto.totalPrice());
-        order.setAcceptationDate(requestDto.acceptationDate());
-        order.setCompletionDate(requestDto.completionDate());
-        order.setStatus(requestDto.status());
         order.setCar(carService.getById(requestDto.carId()));
         order.setCarParts(carPartService.findAllWithIds(requestDto.carPartIds()));
         order.setCarServices(carServiceService.findAllWithIds(requestDto.carServiceIds()));
@@ -47,7 +43,7 @@ public class OrderMapper {
         return new OrderResponseDto(
                 order.getId(),
                 order.getDescription(),
-                order.getTotalPrice(),
+                order.getTotalPriceForClient(),
                 order.getAcceptationDate(),
                 order.getCompletionDate(),
                 order.getStatus(),

@@ -1,5 +1,6 @@
 package task.autoservice.model;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,7 +29,7 @@ public class Order extends IdentifiableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    private BigDecimal totalPrice;
+    private BigDecimal totalPriceForClient;
     private LocalDateTime acceptationDate;
     private LocalDateTime completionDate;
     @Enumerated(EnumType.ORDINAL)
@@ -36,11 +37,13 @@ public class Order extends IdentifiableEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Car car;
     @ManyToMany
+    @Column(name = "car_services")
     private List<CarService> carServices;
     @ManyToMany
+    @Column(name = "car_parts")
     private List<CarPart> carParts;
 
-    enum OrderStatus {
+    public enum OrderStatus {
         ACCEPTED,
         IN_PROGRESS,
         COMPLETED_SUCCESSFULLY,
@@ -53,7 +56,7 @@ public class Order extends IdentifiableEntity {
         return "Order{"
                 + "id=" + id
                 + ", description='" + description + '\''
-                + ", totalPrice=" + totalPrice
+                + ", totalPrice=" + totalPriceForClient
                 + ", acceptationDate=" + acceptationDate
                 + ", completionDate=" + completionDate
                 + ", status=" + status
