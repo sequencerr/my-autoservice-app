@@ -1,10 +1,13 @@
 package task.autoservice.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import task.autoservice.dto.mapper.CarServiceMapper;
 import task.autoservice.dto.request.CarServiceRequestDto;
@@ -33,7 +36,17 @@ public class CarServiceController {
     public CarServiceResponseDto update(
             @PathVariable Long id,
             @RequestBody CarServiceRequestDto requestDto) {
-        CarService updatedCarService = carServiceService.update(carServiceMapper.toModel(id, requestDto));
+        CarService updatedCarService =
+                carServiceService.update(carServiceMapper.toModel(id, requestDto));
         return carServiceMapper.toDto(updatedCarService);
+    }
+
+    @PutMapping("/{id}/isPaid")
+    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestParam Boolean isPaid) {
+        CarService service = carServiceService.getById(id);
+        service.setIsPaid(isPaid);
+        carServiceService.update(service);
+        return new ResponseEntity<>(
+                "Car service's is paid status has been successfully updated.", HttpStatus.OK);
     }
 }
