@@ -6,23 +6,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import task.autoservice.model.CarService;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
 public interface CarServiceRepository extends JpaRepository<CarService, Long> {
-    @Query(value = "SELECT cs.id as id, cs.price as price FROM orders o" +
+    @Query(value = "SELECT cs.id id, cs.price price, cs.is_paid is_paid, cs.order_id order_id, cs.repairer_id repairer_id" +
+            " FROM orders o" +
             " JOIN orders_car_services ocs ON ocs.order_id = o.id" +
             " JOIN car_services        cs  ON cs.order_id  = ocs.car_services_id " +
             " JOIN repairers           r   ON r.id         = cs.repairer_id" +
             " WHERE o.status = 4 AND r.id = ?1", nativeQuery = true)
-    List<ServiceReport> getServiceToPay(Long repairerId);
-
-    interface ServiceReport {
-        Long getId();
-
-        BigDecimal getPrice();
-    }
+    List<CarService> getServiceToPay(Long repairerId);
 
     @Modifying
     @Query(value = "UPDATE car_services s" +

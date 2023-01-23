@@ -3,7 +3,6 @@ package task.autoservice.service.impl;
 import org.springframework.stereotype.Service;
 import task.autoservice.model.CarService;
 import task.autoservice.repository.CarServiceRepository;
-import task.autoservice.repository.CarServiceRepository.ServiceReport;
 import task.autoservice.service.CarServiceService;
 
 import java.util.List;
@@ -19,7 +18,7 @@ public class CarServiceServiceImpl extends GenericServiceImpl<CarService>
     }
 
     @Override
-    public List<ServiceReport> getServiceToPay(Long repairerId) {
+    public List<CarService> getServiceToPay(Long repairerId) {
         return repository.getServiceToPay(repairerId);
     }
 
