@@ -1,5 +1,7 @@
 package task.autoservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,12 +28,14 @@ public class CarServiceController {
         this.carServiceMapper = carServiceMapper;
     }
 
+    @Operation(summary = "CRUD: Create car service by dto")
     @PostMapping
     public CarServiceResponseDto create(@RequestBody CarServiceRequestDto requestDto) {
         CarService savedCarService = carServiceService.create(carServiceMapper.toModel(requestDto));
         return carServiceMapper.toDto(savedCarService);
     }
 
+    @Operation(summary = "CRUD: Update car service by id with dto")
     @PutMapping("/{id}")
     public CarServiceResponseDto update(
             @PathVariable Long id,
@@ -41,8 +45,12 @@ public class CarServiceController {
         return carServiceMapper.toDto(updatedCarService);
     }
 
+    @Operation(summary = "Update service pay (by id) status (true/false)")
     @PutMapping("/{id}/isPaid")
-    public ResponseEntity<String> updateStatus(@PathVariable Long id, @RequestParam Boolean isPaid) {
+    public ResponseEntity<String> updateStatus(
+            @PathVariable Long id,
+            @Parameter(description = "New service status (true/false)")
+            @RequestParam Boolean isPaid) {
         CarService service = carServiceService.getById(id);
         service.setIsPaid(isPaid);
         carServiceService.update(service);

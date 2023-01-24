@@ -1,5 +1,6 @@
 package task.autoservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -23,12 +24,14 @@ public class CarPartController {
         this.carPartMapper = carPartMapper;
     }
 
+    @Operation(summary = "CRUD: Create car part by dto")
     @PostMapping
     public CarPartResponseDto create(@RequestBody CarPartRequestDto requestDto) {
         CarPart savedCarPart = carPartService.create(carPartMapper.toModel(requestDto));
         return carPartMapper.toDto(savedCarPart);
     }
 
+    @Operation(summary = "CRUD: Update car part by id with dto")
     @PutMapping("/{id}")
     public CarPartResponseDto update(
             @PathVariable Long id,

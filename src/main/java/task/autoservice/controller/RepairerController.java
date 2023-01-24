@@ -1,5 +1,6 @@
 package task.autoservice.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,12 +36,14 @@ public class RepairerController {
         this.orderMapper = orderMapper;
     }
 
+    @Operation(summary = "CRUD: Create repairer by dto")
     @PostMapping
     public RepairerResponseDto create(@RequestBody RepairerRequestDto requestDto) {
         Repairer savedRepairer = repairerService.create(repairerMapper.toModel(requestDto));
         return repairerMapper.toDto(savedRepairer);
     }
 
+    @Operation(summary = "CRUD: Update repairer by id with dto")
     @PutMapping("/{id}")
     public RepairerResponseDto update(
             @PathVariable Long id,
@@ -49,12 +52,15 @@ public class RepairerController {
         return repairerMapper.toDto(updatedRepairer);
     }
 
+    @Operation(summary = "Get repairer's completed orders")
     @GetMapping("/{id}/completed-orders")
     public List<OrderResponseDto> getCompletedOrders(@PathVariable Long id) {
         return repairerService.getById(id).getCompletedOrders()
                 .stream().map(orderMapper::toDto).toList();
     }
 
+    @Operation(summary = "Calculate repairer's salary, mark all his done services as paid, "
+            + "and return the amount")
     @GetMapping("/{id}/pay-salary")
     public BigDecimal getSalaryAndPay(@PathVariable Long id) {
         return repairerService.calculateSalary(id);
