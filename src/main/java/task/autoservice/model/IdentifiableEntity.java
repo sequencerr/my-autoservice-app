@@ -4,5 +4,5 @@ import lombok.Getter;
 
 @Getter
 public class IdentifiableEntity {
-    public Long id;
+    private Long id;
 }

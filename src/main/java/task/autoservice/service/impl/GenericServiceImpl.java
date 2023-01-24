@@ -19,7 +19,9 @@ public abstract class GenericServiceImpl<T extends IdentifiableEntity>
         return repository.getReferenceById(id);
     }
 
-    public List<T> findAllById(List<Long> ids) { return repository.findAllById(ids); }
+    public List<T> findAllById(List<Long> ids) {
+        return repository.findAllById(ids);
+    }
 
     public T create(T entity) {
         if (entity.getId() != null) {

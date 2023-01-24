@@ -44,8 +44,9 @@ public class OrderController {
             @PathVariable Long id,
             @RequestBody OrderRequestDto requestDto) {
         Order order = orderMapper.toModel(id, requestDto);
-        if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY)
+        if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY) {
             order.setCompletionDate(LocalDateTime.now());
+        }
         return orderMapper.toDto(orderService.update(order));
     }
 
