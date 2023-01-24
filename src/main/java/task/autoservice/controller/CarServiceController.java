@@ -54,7 +54,6 @@ public class CarServiceController {
         CarService service = carServiceService.getById(id);
         service.setIsPaid(isPaid);
         carServiceService.update(service);
-        return new ResponseEntity<>(
-                "Car service's is paid status has been successfully updated.", HttpStatus.OK);
+        return ResponseEntity.ok("Car service's is paid status has been successfully updated.");
     }
 }

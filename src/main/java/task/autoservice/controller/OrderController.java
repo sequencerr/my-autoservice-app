@@ -61,8 +61,7 @@ public class OrderController {
             @Parameter(description = "Car part's id to add")
             @RequestParam Long partId) {
         orderService.addPart(id, partId);
-        return new ResponseEntity<>(
-                "Part was successfully added to specified order", HttpStatus.OK);
+        return ResponseEntity.ok("Part was successfully added to specified order");
     }
 
     @Operation(summary = "Update order's progress by its id")
@@ -74,8 +73,7 @@ public class OrderController {
                     + "`COMPLETED_SUCCESSFULLY`, `COMPLETED_UNSUCCESSFULLY`, `PAID`.")
             @RequestParam String status) {
         orderService.updateStatus(id, status);
-        return new ResponseEntity<>(
-                "Order's status has been successfully updated.", HttpStatus.OK);
+        return ResponseEntity.ok("Order's status has been successfully updated.");
     }
 
     @Operation(summary = "Calculate price for client, save it to order entity and return the value")
