@@ -1,6 +1,8 @@
 package task.autoservice.dto.mapper;
 
 import org.springframework.stereotype.Component;
+import task.autoservice.dto.DtoMapper;
+import task.autoservice.dto.ModelMapper;
 import task.autoservice.dto.request.OrderRequestDto;
 import task.autoservice.dto.response.OrderResponseDto;
 import task.autoservice.model.Car;
@@ -10,7 +12,9 @@ import task.autoservice.service.CarServiceService;
 import task.autoservice.service.GenericService;
 
 @Component
-public class OrderMapper {
+public class OrderMapper implements
+        DtoMapper<Order, OrderRequestDto>,
+        ModelMapper<Order, OrderResponseDto> {
     private final GenericService<Car> carService;
     private final GenericService<CarPart> carPartService;
     private final CarServiceService carServiceService;
@@ -29,6 +33,7 @@ public class OrderMapper {
         return toModel(null, requestDto);
     }
 
+    @Override
     public Order toModel(Long id, OrderRequestDto requestDto) {
         Order order = new Order();
         order.setId(id);
@@ -39,6 +44,7 @@ public class OrderMapper {
         return order;
     }
 
+    @Override
     public OrderResponseDto toDto(Order order) {
         return new OrderResponseDto(
                 order.getId(),
