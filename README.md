@@ -2,6 +2,13 @@
 
 Auto Service is a Java based web application that users to place orders for car repairment. It is developed using Spring Boot framework. The database is managed by Spring Data JPA using Hibernate ORM (under the hood). My project is using 3-layer architecture and following SOLID principles.
 
+<!-- TOC -->
+* [Auto Service](#auto-service)
+    * [Features](#features)
+    * [Used Technologies](#used-technologies)
+    * [Set-up and Running the Project](#set-up-and-running-the-project)
+<!-- TOC -->
+
 ### Features
 
 - Swagger API documentation
