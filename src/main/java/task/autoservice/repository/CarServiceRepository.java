@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import task.autoservice.model.CarService;
+import task.autoservice.model.Order.OrderStatus;
 
 import java.util.List;
 
@@ -16,8 +17,8 @@ public interface CarServiceRepository extends JpaRepository<CarService, Long> {
             + " JOIN orders_car_services ocs ON ocs.order_id = o.id"
             + " JOIN car_services        cs  ON cs.order_id  = ocs.car_services_id "
             + " JOIN repairers           r   ON r.id         = cs.repairer_id"
-            + " WHERE o.status = 4 AND r.id = ?1", nativeQuery = true)
-    List<CarService> getServiceToPay(Long repairerId);
+            + " WHERE o.status = ?2 AND r.id = ?1", nativeQuery = true)
+    List<CarService> getServicesByRepairerAndOrderStatus(Long repairerId, OrderStatus status);
 
     @Modifying
     @Query(value = "UPDATE car_services s"

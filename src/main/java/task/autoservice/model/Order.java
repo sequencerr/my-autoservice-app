@@ -32,7 +32,7 @@ public class Order extends IdentifiableEntity {
     private BigDecimal totalPriceForClient;
     private LocalDateTime acceptationDate;
     private LocalDateTime completionDate;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private OrderStatus status;
     @OneToOne(fetch = FetchType.LAZY)
     private Car car;
