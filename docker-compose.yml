@@ -1,0 +1,31 @@
+services:
+  database:
+    platform: linux/x86_64
+    image: postgres:15.1
+    restart: unless-stopped
+    env_file: ./.env
+    environment:
+      POSTGRES_PASSWORD: $DB_PASSWORD
+    ports:
+      - $DB_LOCAL_PORT:$DB_DOCKER_PORT
+
+  appserver:
+    depends_on:
+      - database
+    restart: on-failure
+    image: yurch/autoservice
+    build: .
+    env_file: ./.env
+    environment:
+      SPRING_APPLICATION_JSON: '{
+        "spring.datasource.url": "jdbc:postgresql://database:$DB_DOCKER_PORT/?sslmode=disable",
+        "spring.datasource.username": "$DB_USERNAME",
+        "spring.datasource.password": "$DB_PASSWORD",
+        "spring.datasource.driverClassName": "org.postgresql.Driver",
+        "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.PostgresPlusDialect",
+        "spring.jpa.hibernate.ddl-auto": "create"
+      }'
+      JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
+    ports:
+      - $SPRING_LOCAL_PORT:$SPRING_DOCKER_PORT
+      - $DEBUG_PORT:$DEBUG_PORT
