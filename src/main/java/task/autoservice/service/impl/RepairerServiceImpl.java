@@ -10,13 +10,10 @@ import task.autoservice.service.RepairerService;
 
 import java.math.BigDecimal;
 import java.util.List;
-import java.util.function.BiFunction;
 
 @Service
 public class RepairerServiceImpl extends GenericServiceImpl<Repairer> implements RepairerService {
     private static final BigDecimal PERCENTAGE_TO_PAY = BigDecimal.valueOf(0.4);
-    private static final BiFunction<BigDecimal, CarService, BigDecimal> REDUCER =
-            (a, c) -> a.add(c.getPrice().multiply(PERCENTAGE_TO_PAY));
     private final CarServiceService carServiceService;
 
     public RepairerServiceImpl(
@@ -32,6 +29,7 @@ public class RepairerServiceImpl extends GenericServiceImpl<Repairer> implements
     public BigDecimal calculateSalary(Long repairerId) {
         List<CarService> services = carServiceService.getServiceToPay(repairerId);
         carServiceService.markAllPaidById(services.stream().map(CarService::getId).toList());
-        return services.stream().reduce(BigDecimal.ZERO, REDUCER, BigDecimal::add);
+        return services.stream().reduce(BigDecimal.ZERO,
+                (a, c) -> a.add(c.getPrice().multiply(PERCENTAGE_TO_PAY)), BigDecimal::add);
     }
 }
