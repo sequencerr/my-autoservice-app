@@ -19,7 +19,9 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     private static final BigDecimal ONLY_DIAGNOSE_PRICE = BigDecimal.valueOf(500);
     private final GenericService<CarPart> carPartService;
 
-    public OrderServiceImpl(JpaRepository<Order, Long> repository, GenericService<CarPart> carPartService) {
+    public OrderServiceImpl(
+            JpaRepository<Order, Long> repository,
+            GenericService<CarPart> carPartService) {
         super(repository);
         this.carPartService = carPartService;
     }
@@ -46,10 +48,9 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     public BigDecimal calculateTotalPriceForClient(Long id) {
         Order order = getById(id);
 
-        if (order == null) {
+        if (order == null)
             throw new EntityNotFoundException(
                     "Unable to find " + Order.class.getSimpleName() + " with id " + id);
-        }
 
         if (order.getCarServices().isEmpty() && order.getCarParts().isEmpty()) {
             order.setTotalPriceForClient(ONLY_DIAGNOSE_PRICE);
@@ -57,26 +58,29 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
             return ONLY_DIAGNOSE_PRICE;
         }
 
+        BigDecimal price = calculate(order);
+
+        order.setTotalPriceForClient(price);
+        update(order);
+
+        return price;
+    }
+
+    private BigDecimal calculate(Order order) {
         int ordersCount = order.getCar().getOwner().getOrders().size();
         if (ordersCount > 20) ordersCount = 20;
+
         double discountPerService = ordersCount * DISCOUNT_PERCENTAGE_PER_SERVICE;
         double discountPerPart = ordersCount * DISCOUNT_PERCENTAGE_PER_PART;
 
-        BigDecimal servicesTotalPrice = order.getCarServices().stream().reduce(
+        return order.getCarServices().stream().reduce(
                 BigDecimal.ZERO,
                 (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerService))),
                 BigDecimal::add
-        );
-        BigDecimal partsTotalPrice = order.getCarParts().stream().reduce(
+        ).add(order.getCarParts().stream().reduce(
                 BigDecimal.ZERO,
                 (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerPart))),
                 BigDecimal::add
-        );
-        BigDecimal priceForClient = servicesTotalPrice.add(partsTotalPrice);
-
-        order.setTotalPriceForClient(priceForClient);
-        update(order);
-
-        return priceForClient;
+        ));
     }
 }
