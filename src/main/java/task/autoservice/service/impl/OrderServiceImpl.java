@@ -45,7 +45,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
 
     @Override
     @Transactional
-    public BigDecimal calculateTotalPriceForClient(Long id) {
+    public BigDecimal updateCalculatedPrice(Long id) {
         Order order = getById(id);
 
         if (order == null)
@@ -53,14 +53,14 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
                     "Unable to find " + Order.class.getSimpleName() + " with id " + id);
 
         if (order.getCarServices().isEmpty() && order.getCarParts().isEmpty()) {
-            order.setTotalPriceForClient(ONLY_DIAGNOSE_PRICE);
+            order.setPrice(ONLY_DIAGNOSE_PRICE);
             update(order);
             return ONLY_DIAGNOSE_PRICE;
         }
 
         BigDecimal price = calculate(order);
 
-        order.setTotalPriceForClient(price);
+        order.setPrice(price);
         update(order);
 
         return price;

@@ -49,7 +49,7 @@ public class OrderMapper implements
         return new OrderResponseDto(
                 order.getId(),
                 order.getDescription(),
-                order.getTotalPriceForClient(),
+                order.getPrice(),
                 order.getAcceptationDate(),
                 order.getCompletionDate(),
                 order.getStatus(),

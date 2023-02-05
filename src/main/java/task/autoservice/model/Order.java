@@ -29,7 +29,7 @@ public class Order extends IdentifiableEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String description;
-    private BigDecimal totalPriceForClient;
+    private BigDecimal price;
     private LocalDateTime acceptationDate;
     private LocalDateTime completionDate;
     @Enumerated(EnumType.STRING)
@@ -56,7 +56,7 @@ public class Order extends IdentifiableEntity {
         return "Order{"
                 + "id=" + id
                 + ", description='" + description + '\''
-                + ", totalPrice=" + totalPriceForClient
+                + ", totalPrice=" + price
                 + ", acceptationDate=" + acceptationDate
                 + ", completionDate=" + completionDate
                 + ", status=" + status

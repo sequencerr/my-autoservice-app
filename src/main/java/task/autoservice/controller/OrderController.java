@@ -77,7 +77,7 @@ public class OrderController {
 
     @Operation(summary = "Calculate price for client, save it to order entity and return the value")
     @GetMapping("/{id}/price")
-    public BigDecimal getCalculatedTotalPriceForClient(@PathVariable Long id) {
-        return orderService.calculateTotalPriceForClient(id);
+    public BigDecimal getPrice(@PathVariable Long id) {
+        return orderService.updateCalculatedPrice(id);
     }
 }

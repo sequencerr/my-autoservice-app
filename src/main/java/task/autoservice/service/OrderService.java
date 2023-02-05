@@ -9,5 +9,5 @@ public interface OrderService extends GenericService<Order> {
 
     void updateStatus(Long id, String status);
 
-    BigDecimal calculateTotalPriceForClient(Long id);
+    BigDecimal updateCalculatedPrice(Long id);
 }
