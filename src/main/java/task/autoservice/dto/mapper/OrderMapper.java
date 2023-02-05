@@ -6,7 +6,7 @@ import task.autoservice.dto.ModelMapper;
 import task.autoservice.dto.request.OrderRequestDto;
 import task.autoservice.dto.response.OrderResponseDto;
 import task.autoservice.model.Car;
-import task.autoservice.model.CarPart;
+import task.autoservice.model.Detail;
 import task.autoservice.model.Order;
 import task.autoservice.model.Overhaul;
 import task.autoservice.service.GenericService;
@@ -17,16 +17,16 @@ public class OrderMapper implements
         DtoMapper<Order, OrderRequestDto>,
         ModelMapper<Order, OrderResponseDto> {
     private final GenericService<Car> carService;
-    private final GenericService<CarPart> carPartService;
+    private final GenericService<Detail> detailService;
     private final OverhaulService overhaulService;
 
     public OrderMapper(
             GenericService<Car> carService,
-            GenericService<CarPart> carPartService,
+            GenericService<Detail> detailService,
             OverhaulService overhaulService
     ) {
         this.carService = carService;
-        this.carPartService = carPartService;
+        this.detailService = detailService;
         this.overhaulService = overhaulService;
     }
 
@@ -40,7 +40,7 @@ public class OrderMapper implements
         order.setId(id);
         order.setDescription(requestDto.description());
         order.setCar(carService.getById(requestDto.carId()));
-        order.setCarParts(carPartService.findAllById(requestDto.carPartIds()));
+        order.setDetails(detailService.findAllById(requestDto.detailIds()));
         order.setOverhauls(overhaulService.findAllById(requestDto.overhaulIds()));
         return order;
     }
@@ -55,7 +55,7 @@ public class OrderMapper implements
                 order.getCompletionDate(),
                 order.getStatus(),
                 order.getCar().getId(),
-                order.getCarParts().stream().map(CarPart::getId).toList(),
+                order.getDetails().stream().map(Detail::getId).toList(),
                 order.getOverhauls().stream().map(Overhaul::getId).toList());
     }
 }

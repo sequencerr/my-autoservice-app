@@ -2,11 +2,11 @@ package task.autoservice.service.impl;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import task.autoservice.model.CarPart;
+import task.autoservice.model.Detail;
 
 @Service
-public class CarPartServiceImpl extends GenericServiceImpl<CarPart> {
-    public CarPartServiceImpl(JpaRepository<CarPart, Long> repository) {
+public class DetailServiceImpl extends GenericServiceImpl<Detail> {
+    public DetailServiceImpl(JpaRepository<Detail, Long> repository) {
         super(repository);
     }
 }

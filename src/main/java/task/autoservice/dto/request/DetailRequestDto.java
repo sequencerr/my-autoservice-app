@@ -2,7 +2,7 @@ package task.autoservice.dto.request;
 
 import java.math.BigDecimal;
 
-public record CarPartRequestDto(
+public record DetailRequestDto(
         String name,
         BigDecimal price) {
 }

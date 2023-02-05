@@ -15,8 +15,8 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "car_parts")
-public class CarPart extends IdentifiableEntity {
+@Table(name = "car_details")
+public class Detail extends IdentifiableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

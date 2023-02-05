@@ -53,14 +53,14 @@ public class OrderController {
         return orderMapper.toDto(orderService.update(order));
     }
 
-    @Operation(summary = "Add car part required for repairment to order by their ids")
-    @PutMapping("/{id}/add-part")
-    public ResponseEntity<String> addCarPart(
+    @Operation(summary = "Add car detail required for repairment to order by their ids")
+    @PutMapping("/{id}/add-detail")
+    public ResponseEntity<String> addDetail(
             @PathVariable Long id,
-            @Parameter(description = "Car part's id to add")
-            @RequestParam Long partId) {
-        orderService.addPart(id, partId);
-        return ResponseEntity.ok("Part was successfully added to specified order");
+            @Parameter(description = "Car detail's id to add")
+            @RequestParam Long detailId) {
+        orderService.addDetail(id, detailId);
+        return ResponseEntity.ok("Detail was successfully added to specified order");
     }
 
     @Operation(summary = "Update order's progress by its id")

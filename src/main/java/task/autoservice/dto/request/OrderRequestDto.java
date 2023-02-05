@@ -6,5 +6,5 @@ public record OrderRequestDto(
         String description,
         Long carId,
         List<Long> overhaulIds,
-        List<Long> carPartIds) {
+        List<Long> detailIds) {
 }

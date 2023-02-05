@@ -40,8 +40,8 @@ public class Order extends IdentifiableEntity {
     @Column(name = "overhauls")
     private List<Overhaul> overhauls;
     @ManyToMany
-    @Column(name = "car_parts")
-    private List<CarPart> carParts;
+    @Column(name = "car_details")
+    private List<Detail> details;
 
     public enum OrderStatus {
         ACCEPTED,
@@ -62,7 +62,7 @@ public class Order extends IdentifiableEntity {
                 + ", status=" + status
                 + ", car=" + car
                 + ", overhauls=" + overhauls
-                + ", carParts=" + carParts
+                + ", details=" + details
                 + '}';
     }
 }

@@ -4,7 +4,7 @@ import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
-import task.autoservice.model.CarPart;
+import task.autoservice.model.Detail;
 import task.autoservice.model.Order;
 import task.autoservice.model.Order.OrderStatus;
 import task.autoservice.service.GenericService;
@@ -15,23 +15,23 @@ import java.math.BigDecimal;
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
     private static final double DISCOUNT_PERCENTAGE_PER_OVERHAUL = 0.02;
-    private static final double DISCOUNT_PERCENTAGE_PER_PART = 0.01;
+    private static final double DISCOUNT_PERCENTAGE_PER_DETAIL = 0.01;
     private static final BigDecimal ONLY_DIAGNOSE_PRICE = BigDecimal.valueOf(500);
-    private final GenericService<CarPart> carPartService;
+    private final GenericService<Detail> detailService;
 
     public OrderServiceImpl(
             JpaRepository<Order, Long> repository,
-            GenericService<CarPart> carPartService) {
+            GenericService<Detail> detailService) {
         super(repository);
-        this.carPartService = carPartService;
+        this.detailService = detailService;
     }
 
     @Override
     @Transactional
-    public void addPart(Long id, Long partId) {
+    public void addDetail(Long id, Long detailId) {
         Order order = getById(id);
-        order.getCarParts().add(carPartService.getById(partId));
-        order.setCarParts(order.getCarParts());
+        order.getDetails().add(detailService.getById(detailId));
+        order.setDetails(order.getDetails());
         update(order);
     }
 
@@ -53,7 +53,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
                     "Unable to find " + Order.class.getSimpleName() + " with id " + id);
         }
 
-        if (order.getOverhauls().isEmpty() && order.getCarParts().isEmpty()) {
+        if (order.getOverhauls().isEmpty() && order.getDetails().isEmpty()) {
             order.setPrice(ONLY_DIAGNOSE_PRICE);
             update(order);
             return ONLY_DIAGNOSE_PRICE;
@@ -72,15 +72,15 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
         if (ordersCount > 20) ordersCount = 20;
 
         double discountPerOverhaul = ordersCount * DISCOUNT_PERCENTAGE_PER_OVERHAUL;
-        double discountPerPart = ordersCount * DISCOUNT_PERCENTAGE_PER_PART;
+        double discountPerDetail = ordersCount * DISCOUNT_PERCENTAGE_PER_DETAIL;
 
         return order.getOverhauls().stream().reduce(
                 BigDecimal.ZERO,
                 (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerOverhaul))),
                 BigDecimal::add
-        ).add(order.getCarParts().stream().reduce(
+        ).add(order.getDetails().stream().reduce(
                 BigDecimal.ZERO,
-                (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerPart))),
+                (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerDetail))),
                 BigDecimal::add
         ));
     }

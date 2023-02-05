@@ -15,5 +15,5 @@ public record OrderResponseDto(
         OrderStatus status,
         Long carId,
         List<Long> overhaulIds,
-        List<Long> carPartIds) {
+        List<Long> detailIds) {
 }
