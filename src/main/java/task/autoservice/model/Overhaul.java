@@ -18,8 +18,8 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "car_services")
-public class CarService extends IdentifiableEntity {
+@Table(name = "overhauls")
+public class Overhaul extends IdentifiableEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

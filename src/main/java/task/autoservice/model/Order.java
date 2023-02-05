@@ -37,8 +37,8 @@ public class Order extends IdentifiableEntity {
     @OneToOne(fetch = FetchType.LAZY)
     private Car car;
     @ManyToMany
-    @Column(name = "car_services")
-    private List<CarService> carServices;
+    @Column(name = "overhauls")
+    private List<Overhaul> overhauls;
     @ManyToMany
     @Column(name = "car_parts")
     private List<CarPart> carParts;
@@ -61,7 +61,7 @@ public class Order extends IdentifiableEntity {
                 + ", completionDate=" + completionDate
                 + ", status=" + status
                 + ", car=" + car
-                + ", carServices=" + carServices
+                + ", overhauls=" + overhauls
                 + ", carParts=" + carParts
                 + '}';
     }

@@ -1,9 +1,8 @@
-package task.autoservice.dto.response;
+package task.autoservice.dto.request;
 
 import java.math.BigDecimal;
 
-public record CarServiceResponseDto(
-        Long id,
+public record OverhaulRequestDto(
         BigDecimal price,
         Boolean isPaid,
         Long orderId,

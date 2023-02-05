@@ -14,6 +14,6 @@ public record OrderResponseDto(
         LocalDateTime completionDate,
         OrderStatus status,
         Long carId,
-        List<Long> carServiceIds,
+        List<Long> overhaulIds,
         List<Long> carPartIds) {
 }

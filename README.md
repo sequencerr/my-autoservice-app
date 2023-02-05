@@ -16,8 +16,8 @@ Auto Service is a Java based web application that users to place orders for car 
   - Accessible via http://localhost:8080/swagger-ui/index.html
 - Get user's performed and repairer's completed orders
 - Calculate and retrieve order's price for user including possible discounts
-- Calculate repairer's salary based on services completed by him and paid by user
-- Consider empty order is car diagnose service and require fixed amount of money from user
+- Calculate repairer's salary based on overhauls completed by him and paid by user
+- Consider empty order is car diagnose overhaul and require fixed amount of money from user
 
 ### Used Technologies
 

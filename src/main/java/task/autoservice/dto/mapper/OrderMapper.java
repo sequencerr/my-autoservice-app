@@ -8,8 +8,9 @@ import task.autoservice.dto.response.OrderResponseDto;
 import task.autoservice.model.Car;
 import task.autoservice.model.CarPart;
 import task.autoservice.model.Order;
-import task.autoservice.service.CarServiceService;
+import task.autoservice.model.Overhaul;
 import task.autoservice.service.GenericService;
+import task.autoservice.service.OverhaulService;
 
 @Component
 public class OrderMapper implements
@@ -17,16 +18,16 @@ public class OrderMapper implements
         ModelMapper<Order, OrderResponseDto> {
     private final GenericService<Car> carService;
     private final GenericService<CarPart> carPartService;
-    private final CarServiceService carServiceService;
+    private final OverhaulService overhaulService;
 
     public OrderMapper(
             GenericService<Car> carService,
             GenericService<CarPart> carPartService,
-            CarServiceService carServiceService
+            OverhaulService overhaulService
     ) {
         this.carService = carService;
         this.carPartService = carPartService;
-        this.carServiceService = carServiceService;
+        this.overhaulService = overhaulService;
     }
 
     public Order toModel(OrderRequestDto requestDto) {
@@ -40,7 +41,7 @@ public class OrderMapper implements
         order.setDescription(requestDto.description());
         order.setCar(carService.getById(requestDto.carId()));
         order.setCarParts(carPartService.findAllById(requestDto.carPartIds()));
-        order.setCarServices(carServiceService.findAllById(requestDto.carServiceIds()));
+        order.setOverhauls(overhaulService.findAllById(requestDto.overhaulIds()));
         return order;
     }
 
@@ -55,6 +56,6 @@ public class OrderMapper implements
                 order.getStatus(),
                 order.getCar().getId(),
                 order.getCarParts().stream().map(CarPart::getId).toList(),
-                order.getCarServices().stream().map(s -> s.getId()).toList());
+                order.getOverhauls().stream().map(Overhaul::getId).toList());
     }
 }

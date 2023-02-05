@@ -59,7 +59,7 @@ public class RepairerController {
                 .stream().map(orderMapper::toDto).toList();
     }
 
-    @Operation(summary = "Calculate repairer's salary, mark all his done services as paid, "
+    @Operation(summary = "Calculate repairer's salary, mark all his done overhauls as paid, "
             + "and return the amount")
     @GetMapping("/{id}/pay-salary")
     public BigDecimal getSalaryAndPay(@PathVariable Long id) {

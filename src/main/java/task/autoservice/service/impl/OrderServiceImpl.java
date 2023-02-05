@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
-    private static final double DISCOUNT_PERCENTAGE_PER_SERVICE = 0.02;
+    private static final double DISCOUNT_PERCENTAGE_PER_OVERHAUL = 0.02;
     private static final double DISCOUNT_PERCENTAGE_PER_PART = 0.01;
     private static final BigDecimal ONLY_DIAGNOSE_PRICE = BigDecimal.valueOf(500);
     private final GenericService<CarPart> carPartService;
@@ -48,11 +48,12 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     public BigDecimal updateCalculatedPrice(Long id) {
         Order order = getById(id);
 
-        if (order == null)
+        if (order == null) {
             throw new EntityNotFoundException(
                     "Unable to find " + Order.class.getSimpleName() + " with id " + id);
+        }
 
-        if (order.getCarServices().isEmpty() && order.getCarParts().isEmpty()) {
+        if (order.getOverhauls().isEmpty() && order.getCarParts().isEmpty()) {
             order.setPrice(ONLY_DIAGNOSE_PRICE);
             update(order);
             return ONLY_DIAGNOSE_PRICE;
@@ -70,12 +71,12 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
         int ordersCount = order.getCar().getOwner().getOrders().size();
         if (ordersCount > 20) ordersCount = 20;
 
-        double discountPerService = ordersCount * DISCOUNT_PERCENTAGE_PER_SERVICE;
+        double discountPerOverhaul = ordersCount * DISCOUNT_PERCENTAGE_PER_OVERHAUL;
         double discountPerPart = ordersCount * DISCOUNT_PERCENTAGE_PER_PART;
 
-        return order.getCarServices().stream().reduce(
+        return order.getOverhauls().stream().reduce(
                 BigDecimal.ZERO,
-                (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerService))),
+                (a, c) -> a.add(c.getPrice().subtract(BigDecimal.valueOf(discountPerOverhaul))),
                 BigDecimal::add
         ).add(order.getCarParts().stream().reduce(
                 BigDecimal.ZERO,
