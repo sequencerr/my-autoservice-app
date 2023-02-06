@@ -19,14 +19,9 @@ public class RepairerMapper implements
         this.orderService = orderService;
     }
 
-    public Repairer toModel(RepairerRequestDto requestDto) {
-        return toModel(null, requestDto);
-    }
-
     @Override
-    public Repairer toModel(Long id, RepairerRequestDto requestDto) {
+    public Repairer toModel(RepairerRequestDto requestDto) {
         Repairer repairer = new Repairer();
-        repairer.setId(id);
         repairer.setFullName(requestDto.fullName());
         repairer.setCompletedOrders(orderService.findAllById(requestDto.completedOrderIds()));
         return repairer;

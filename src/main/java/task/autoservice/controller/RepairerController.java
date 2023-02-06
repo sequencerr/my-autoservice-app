@@ -48,8 +48,10 @@ public class RepairerController {
     public RepairerResponseDto update(
             @PathVariable Long id,
             @RequestBody RepairerRequestDto requestDto) {
-        Repairer updatedRepairer = repairerService.update(repairerMapper.toModel(id, requestDto));
-        return repairerMapper.toDto(updatedRepairer);
+        Repairer repairer = repairerMapper.toModel(requestDto);
+        repairer.setId(id);
+        repairerService.update(repairer);
+        return repairerMapper.toDto(repairer);
     }
 
     @Operation(summary = "Get repairer's completed orders")

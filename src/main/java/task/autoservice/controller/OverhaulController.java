@@ -39,9 +39,10 @@ public class OverhaulController {
     public OverhaulResponseDto update(
             @PathVariable Long id,
             @RequestBody OverhaulRequestDto requestDto) {
-        Overhaul updatedOverhaul =
-                overhaulService.update(overhaulMapper.toModel(id, requestDto));
-        return overhaulMapper.toDto(updatedOverhaul);
+        Overhaul overhaul = overhaulMapper.toModel(requestDto);
+        overhaul.setId(id);
+        overhaulService.update(overhaul);
+        return overhaulMapper.toDto(overhaul);
     }
 
     @Operation(summary = "Update overhaul pay (by id) status (true/false)")

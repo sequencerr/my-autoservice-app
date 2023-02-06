@@ -36,7 +36,9 @@ public class DetailController {
     public DetailResponseDto update(
             @PathVariable Long id,
             @RequestBody DetailRequestDto requestDto) {
-        Detail updatedDetail = detailService.update(detailMapper.toModel(id, requestDto));
-        return detailMapper.toDto(updatedDetail);
+        Detail detail = detailMapper.toModel(requestDto);
+        detail.setId(id);
+        detailService.update(detail);
+        return detailMapper.toDto(detail);
     }
 }

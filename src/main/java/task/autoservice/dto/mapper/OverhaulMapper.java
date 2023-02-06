@@ -22,13 +22,7 @@ public class OverhaulMapper implements
     }
 
     public Overhaul toModel(OverhaulRequestDto requestDto) {
-        return toModel(null, requestDto);
-    }
-
-    @Override
-    public Overhaul toModel(Long id, OverhaulRequestDto requestDto) {
         Overhaul service = new Overhaul();
-        service.setId(id);
         service.setPrice(requestDto.price());
         service.setIsPaid(requestDto.isPaid());
         service.setOrder(orderService.getById(requestDto.orderId()));

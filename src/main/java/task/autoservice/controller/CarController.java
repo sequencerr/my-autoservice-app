@@ -36,7 +36,9 @@ public class CarController {
     public CarResponseDto update(
             @PathVariable Long id,
             @RequestBody CarRequestDto requestDto) {
-        Car updatedCar = carService.update(carMapper.toModel(id, requestDto));
-        return carMapper.toDto(updatedCar);
+        Car car = carMapper.toModel(requestDto);
+        car.setId(id);
+        carService.update(car);
+        return carMapper.toDto(car);
     }
 }

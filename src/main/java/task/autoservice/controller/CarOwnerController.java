@@ -47,8 +47,10 @@ public class CarOwnerController {
     public CarOwnerResponseDto update(
             @PathVariable Long id,
             @RequestBody CarOwnerRequestDto requestDto) {
-        CarOwner updatedCarOwner = carOwnerService.update(carOwnerMapper.toModel(id, requestDto));
-        return carOwnerMapper.toDto(updatedCarOwner);
+        CarOwner carOwner = carOwnerMapper.toModel(requestDto);
+        carOwner.setId(id);
+        carOwnerService.update(carOwner);
+        return carOwnerMapper.toDto(carOwner);
     }
 
     @Operation(summary = "Get car owner's performed orders")

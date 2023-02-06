@@ -46,11 +46,13 @@ public class OrderController {
     public OrderResponseDto update(
             @PathVariable Long id,
             @RequestBody OrderRequestDto requestDto) {
-        Order order = orderMapper.toModel(id, requestDto);
+        Order order = orderMapper.toModel(requestDto);
+        order.setId(id);
         if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY) {
             order.setCompletionDate(LocalDateTime.now());
         }
-        return orderMapper.toDto(orderService.update(order));
+        orderService.update(order);
+        return orderMapper.toDto(order);
     }
 
     @Operation(summary = "Add car detail required for repairment to order by their ids")

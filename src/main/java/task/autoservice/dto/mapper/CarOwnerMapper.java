@@ -24,13 +24,7 @@ public class CarOwnerMapper implements
     }
 
     public CarOwner toModel(CarOwnerRequestDto requestDto) {
-        return toModel(null, requestDto);
-    }
-
-    @Override
-    public CarOwner toModel(Long id, CarOwnerRequestDto requestDto) {
         CarOwner owner = new CarOwner();
-        owner.setId(id);
         owner.setCars(carService.findAllById(requestDto.carIds()));
         owner.setOrders(orderService.findAllById(requestDto.orderIds()));
         return owner;

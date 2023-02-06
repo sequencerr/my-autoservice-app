@@ -17,14 +17,9 @@ public class CarMapper implements DtoMapper<Car, CarRequestDto>, ModelMapper<Car
         this.carOwnerService = carOwnerService;
     }
 
-    public Car toModel(CarRequestDto requestDto) {
-        return toModel(null, requestDto);
-    }
-
     @Override
-    public Car toModel(Long id, CarRequestDto requestDto) {
+    public Car toModel(CarRequestDto requestDto) {
         Car car = new Car();
-        car.setId(id);
         car.setBrand(requestDto.brand());
         car.setModel(requestDto.model());
         car.setProductionYear(requestDto.productionYear());

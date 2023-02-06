@@ -30,14 +30,9 @@ public class OrderMapper implements
         this.overhaulService = overhaulService;
     }
 
-    public Order toModel(OrderRequestDto requestDto) {
-        return toModel(null, requestDto);
-    }
-
     @Override
-    public Order toModel(Long id, OrderRequestDto requestDto) {
+    public Order toModel(OrderRequestDto requestDto) {
         Order order = new Order();
-        order.setId(id);
         order.setDescription(requestDto.description());
         order.setCar(carService.getById(requestDto.carId()));
         order.setDetails(detailService.findAllById(requestDto.detailIds()));

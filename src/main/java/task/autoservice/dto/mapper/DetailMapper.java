@@ -11,14 +11,9 @@ import task.autoservice.model.Detail;
 public class DetailMapper implements
         DtoMapper<Detail, DetailRequestDto>,
         ModelMapper<Detail, DetailResponseDto> {
-    public Detail toModel(DetailRequestDto requestDto) {
-        return toModel(null, requestDto);
-    }
-
     @Override
-    public Detail toModel(Long id, DetailRequestDto requestDto) {
+    public Detail toModel(DetailRequestDto requestDto) {
         Detail detail = new Detail();
-        detail.setId(id);
         detail.setName(requestDto.name());
         detail.setPrice(requestDto.price());
         return detail;
