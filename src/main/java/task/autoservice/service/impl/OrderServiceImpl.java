@@ -69,21 +69,15 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
                     "Unable to find " + Order.class.getSimpleName() + " with id " + id);
         }
 
-        if (order.getOverhauls().isEmpty() && order.getDetails().isEmpty()) {
-            order.setPrice(ONLY_DIAGNOSE_PRICE);
-            update(order);
-            return ONLY_DIAGNOSE_PRICE;
-        }
-
-        BigDecimal price = calculate(order);
-
-        order.setPrice(price);
-        update(order);
-
-        return price;
+        order.setPrice(calculate(order));
+        return update(order).getPrice();
     }
 
     private BigDecimal calculate(Order order) {
+        if (order.getOverhauls().isEmpty() && order.getDetails().isEmpty()) {
+            return ONLY_DIAGNOSE_PRICE;
+        }
+
         int ordersCount = order.getCar().getOwner().getOrders().size();
         if (ordersCount > 20) ordersCount = 20;
 
