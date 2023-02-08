@@ -15,11 +15,9 @@ import task.autoservice.dto.mapper.OrderMapper;
 import task.autoservice.dto.request.OrderRequestDto;
 import task.autoservice.dto.response.OrderResponseDto;
 import task.autoservice.model.Order;
-import task.autoservice.model.Order.OrderStatus;
 import task.autoservice.service.OrderService;
 
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/orders")
@@ -36,8 +34,6 @@ public class OrderController {
     @PostMapping
     public OrderResponseDto create(@RequestBody OrderRequestDto requestDto) {
         Order order = orderMapper.toModel(requestDto);
-        order.setAcceptationDate(LocalDateTime.now());
-        order.setStatus(OrderStatus.ACCEPTED);
         return orderMapper.toDto(orderService.create(order));
     }
 
@@ -48,9 +44,6 @@ public class OrderController {
             @RequestBody OrderRequestDto requestDto) {
         Order order = orderMapper.toModel(requestDto);
         order.setId(id);
-        if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY) {
-            order.setCompletionDate(LocalDateTime.now());
-        }
         orderService.update(order);
         return orderMapper.toDto(order);
     }

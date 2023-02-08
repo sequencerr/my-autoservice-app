@@ -11,6 +11,7 @@ import task.autoservice.service.GenericService;
 import task.autoservice.service.OrderService;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Service
 public class OrderServiceImpl extends GenericServiceImpl<Order> implements OrderService {
@@ -24,6 +25,21 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
             GenericService<Detail> detailService) {
         super(repository);
         this.detailService = detailService;
+    }
+
+    @Override
+    public Order create(Order order) {
+        order.setAcceptationDate(LocalDateTime.now());
+        order.setStatus(OrderStatus.ACCEPTED);
+        return super.create(order);
+    }
+
+    @Override
+    public Order update(Order order) {
+        if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY) {
+            order.setCompletionDate(LocalDateTime.now());
+        }
+        return super.update(order);
     }
 
     @Override
