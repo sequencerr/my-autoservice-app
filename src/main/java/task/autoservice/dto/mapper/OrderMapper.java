@@ -10,24 +10,15 @@ import task.autoservice.model.Detail;
 import task.autoservice.model.Order;
 import task.autoservice.model.Overhaul;
 import task.autoservice.service.GenericService;
-import task.autoservice.service.OverhaulService;
 
 @Component
 public class OrderMapper implements
         DtoMapper<Order, OrderRequestDto>,
         ModelMapper<Order, OrderResponseDto> {
     private final GenericService<Car> carService;
-    private final GenericService<Detail> detailService;
-    private final OverhaulService overhaulService;
 
-    public OrderMapper(
-            GenericService<Car> carService,
-            GenericService<Detail> detailService,
-            OverhaulService overhaulService
-    ) {
+    public OrderMapper(GenericService<Car> carService) {
         this.carService = carService;
-        this.detailService = detailService;
-        this.overhaulService = overhaulService;
     }
 
     @Override
@@ -35,8 +26,6 @@ public class OrderMapper implements
         Order order = new Order();
         order.setDescription(requestDto.description());
         order.setCar(carService.getById(requestDto.carId()));
-        order.setDetails(detailService.findAllById(requestDto.detailIds()));
-        order.setOverhauls(overhaulService.findAllById(requestDto.overhaulIds()));
         return order;
     }
 

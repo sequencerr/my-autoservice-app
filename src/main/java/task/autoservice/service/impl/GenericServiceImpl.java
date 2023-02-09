@@ -5,8 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import task.autoservice.model.IdentifiableEntity;
 import task.autoservice.service.GenericService;
 
-import java.util.List;
-
 public abstract class GenericServiceImpl<T extends IdentifiableEntity>
         implements GenericService<T> {
     protected final JpaRepository<T, Long> repository;
@@ -17,10 +15,6 @@ public abstract class GenericServiceImpl<T extends IdentifiableEntity>
 
     public T getById(Long id) {
         return repository.getReferenceById(id);
-    }
-
-    public List<T> findAllById(List<Long> ids) {
-        return repository.findAllById(ids);
     }
 
     public T create(T entity) {
