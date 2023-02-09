@@ -36,7 +36,8 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
 
     @Override
     public Order update(Order order) {
-        if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY) {
+        if (order.getStatus() == OrderStatus.COMPLETED_SUCCESSFULLY
+                || order.getStatus() == OrderStatus.COMPLETED_UNSUCCESSFULLY) {
             order.setCompletionDate(LocalDateTime.now());
         }
         return super.update(order);
