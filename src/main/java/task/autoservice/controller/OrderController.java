@@ -49,6 +49,16 @@ public class OrderController {
     }
 
     @Operation(summary = "Add car detail required for repairment to order by their ids")
+    @PutMapping("/{id}/add-overhaul")
+    public ResponseEntity<String> addOverhaul(
+            @PathVariable Long id,
+            @Parameter(description = "Overhaul's id to add")
+            @RequestParam Long overhaulId) {
+        orderService.addOverhaul(id, overhaulId);
+        return ResponseEntity.ok("Overhaul was successfully added to specified order");
+    }
+
+    @Operation(summary = "Add car detail required for repairment to order by their ids")
     @PutMapping("/{id}/add-detail")
     public ResponseEntity<String> addDetail(
             @PathVariable Long id,
