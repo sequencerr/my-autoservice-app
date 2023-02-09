@@ -23,7 +23,8 @@ services:
         "spring.datasource.password": "$DB_PASSWORD",
         "spring.datasource.driverClassName": "org.postgresql.Driver",
         "spring.jpa.properties.hibernate.dialect": "org.hibernate.dialect.PostgresPlusDialect",
-        "spring.jpa.hibernate.ddl-auto": "create"
+        "spring.jpa.hibernate.ddl-auto": "validate",
+        "spring.h2.console.enabled": "false"
       }'
       JAVA_TOOL_OPTIONS: "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005"
     ports:
