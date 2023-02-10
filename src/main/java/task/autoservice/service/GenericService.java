@@ -1,8 +1,6 @@
 package task.autoservice.service;
 
-import task.autoservice.model.IdentifiableEntity;
-
-public interface GenericService<T extends IdentifiableEntity> {
+public interface GenericService<T> {
     T getById(Long id);
 
     T create(T entity);

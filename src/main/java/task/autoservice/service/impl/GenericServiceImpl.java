@@ -1,12 +1,11 @@
 package task.autoservice.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.data.domain.Example;
 import org.springframework.data.jpa.repository.JpaRepository;
-import task.autoservice.model.IdentifiableEntity;
 import task.autoservice.service.GenericService;
 
-public abstract class GenericServiceImpl<T extends IdentifiableEntity>
-        implements GenericService<T> {
+public abstract class GenericServiceImpl<T> implements GenericService<T> {
     protected final JpaRepository<T, Long> repository;
 
     public GenericServiceImpl(JpaRepository<T, Long> repository) {
@@ -18,19 +17,16 @@ public abstract class GenericServiceImpl<T extends IdentifiableEntity>
     }
 
     public T create(T entity) {
-        if (entity.getId() != null) {
-            throw new EntityNotFoundException(
-                    "Unable to create already exciting entity with id=" + entity.getId()
-                            + ", with name=" + entity.getClass().getSimpleName());
+        if (repository.exists(Example.of(entity))) {
+            throw new RuntimeException(
+                    "You cannot create new entity which already exist. entity=" + entity);
         }
         return repository.save(entity);
     }
 
     public T update(T entity) {
-        if (entity.getId() == null || !repository.existsById(entity.getId())) {
-            throw new EntityNotFoundException(
-                    "Unable to update unexciting entity by id=" + entity.getId()
-                            + ", with name=" + entity.getClass().getSimpleName());
+        if (!repository.exists(Example.of(entity))) {
+            throw new EntityNotFoundException("Unable to update unexciting entity=" + entity);
         }
         return repository.save(entity);
     }

@@ -17,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "repairers")
-public class Repairer extends IdentifiableEntity {
+public class Repairer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

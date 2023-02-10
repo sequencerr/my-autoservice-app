@@ -19,7 +19,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @Entity
 @Table(name = "overhauls")
-public class Overhaul extends IdentifiableEntity {
+public class Overhaul {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
