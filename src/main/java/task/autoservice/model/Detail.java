@@ -25,7 +25,7 @@ public class Detail {
 
     @Override
     public String toString() {
-        return "Goods{"
+        return "Detail{"
                 + "id=" + id
                 + ", name='" + name + '\''
                 + ", price=" + price

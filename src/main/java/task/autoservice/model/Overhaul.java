@@ -33,7 +33,7 @@ public class Overhaul {
 
     @Override
     public String toString() {
-        return "Service{"
+        return "Overhaul{"
                 + "id=" + id
                 + ", price=" + price
                 + ", isPaid=" + isPaid

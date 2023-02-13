@@ -56,7 +56,7 @@ public class Order {
         return "Order{"
                 + "id=" + id
                 + ", description='" + description + '\''
-                + ", totalPrice=" + price
+                + ", price=" + price
                 + ", acceptationDate=" + acceptationDate
                 + ", completionDate=" + completionDate
                 + ", status=" + status
