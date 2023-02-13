@@ -36,8 +36,9 @@ public class Overhaul {
         return "Service{"
                 + "id=" + id
                 + ", price=" + price
-                + ", order=" + order
-                + ", repairer=" + repairer
+                + ", isPaid=" + isPaid
+                + ", orderId=" + (order == null ? null : order.getId())
+                + ", repairerId=" + (repairer == null ? null : repairer.getId())
                 + '}';
     }
 }

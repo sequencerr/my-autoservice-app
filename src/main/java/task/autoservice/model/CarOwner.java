@@ -30,8 +30,10 @@ public class CarOwner {
     public String toString() {
         return "CarOwner{"
                 + "id=" + id
-                + ", cars=" + cars
-                + ", orders=" + orders
+                + ", carIds=" + (cars == null
+                                 ? null : cars.stream().map(c -> c == null ? null : c.getId()))
+                + ", orderIds=" + (orders == null
+                                   ? null : orders.stream().map(o -> o == null ? null : o.getId()))
                 + '}';
     }
 }
