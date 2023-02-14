@@ -1,6 +1,5 @@
 package task.autoservice.service.impl;
 
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import task.autoservice.model.Overhaul;
@@ -25,7 +24,6 @@ public class RepairerServiceImpl extends GenericServiceImpl<Repairer> implements
     }
 
     @Override
-    @Transactional
     public BigDecimal calculateSalary(Long repairerId) {
         List<Overhaul> overhauls = overhaulService.getOverhaulsToPay(repairerId);
         overhaulService.markAllPaidById(overhauls.stream().map(Overhaul::getId).toList());
