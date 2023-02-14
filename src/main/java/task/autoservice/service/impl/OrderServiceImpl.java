@@ -1,6 +1,5 @@
 package task.autoservice.service.impl;
 
-import jakarta.transaction.Transactional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import task.autoservice.model.CarOwner;
@@ -66,7 +65,6 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     }
 
     @Override
-    @Transactional
     public void addDetail(Long id, Long detailId) {
         Order order = getById(id);
         order.getDetails().add(detailService.getById(detailId));
@@ -74,7 +72,6 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     }
 
     @Override
-    @Transactional
     public void updateStatus(Long id, String status) {
         Order order = getById(id);
         OrderStatus statusBefore = order.getStatus();
@@ -98,7 +95,6 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     }
 
     @Override
-    @Transactional
     public BigDecimal updateCalculatedPrice(Long id) {
         Order order = getById(id);
         order.setPrice(calculate(order));
