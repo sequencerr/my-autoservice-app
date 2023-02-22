@@ -1,11 +1,15 @@
 package task.autoservice.service.impl;
 
 import jakarta.persistence.EntityNotFoundException;
-import org.springframework.data.domain.Example;
+import org.hibernate.Hibernate;
+import org.hibernate.proxy.HibernateProxy;
 import org.springframework.data.jpa.repository.JpaRepository;
 import task.autoservice.service.GenericService;
 
+import java.lang.reflect.Field;
+
 public abstract class GenericServiceImpl<T> implements GenericService<T> {
+    private static final String ENTITY_FIELD_ID_NAME = "id";
     protected final JpaRepository<T, Long> repository;
 
     public GenericServiceImpl(JpaRepository<T, Long> repository) {
@@ -17,7 +21,7 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
     }
 
     public T create(T entity) {
-        if (repository.exists(Example.of(entity))) {
+        if (entity instanceof HibernateProxy || getId(entity) != null) {
             throw new RuntimeException(
                     "You cannot create new entity which already exist. entity=" + entity);
         }
@@ -25,9 +29,21 @@ public abstract class GenericServiceImpl<T> implements GenericService<T> {
     }
 
     public T update(T entity) {
-        if (!repository.exists(Example.of(entity))) {
+        Long id = getId(entity);
+        if (id == null || !repository.existsById(id)) {
             throw new EntityNotFoundException("Unable to update unexciting entity=" + entity);
         }
         return repository.save(entity);
+    }
+
+    private Long getId(T entity) {
+        try {
+            if (entity instanceof HibernateProxy) entity = (T) Hibernate.unproxy(entity);
+            Field idField = entity.getClass().getDeclaredField(ENTITY_FIELD_ID_NAME);
+            idField.trySetAccessible();
+            return (Long) idField.get(entity);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

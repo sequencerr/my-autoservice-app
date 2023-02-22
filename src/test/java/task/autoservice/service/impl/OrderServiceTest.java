@@ -72,7 +72,6 @@ class OrderServiceTest {
     @Test
     void create_acceptationAndStatusInitialized_ok() {
         Order order = new Order();
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(order);
         assertNotNull(order.getAcceptationDate(), "Expected to not be null");
         assertTrue(
@@ -98,7 +97,7 @@ class OrderServiceTest {
         Overhaul overhaul = new Overhaul();
         overhaul.setId(ID_FIRST_ITEM);
         Mockito.when(overhaulService.getById(ID_FIRST_ITEM)).thenReturn(overhaul);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.addOverhaul(order.getId(), overhaul.getId());
         assertEquals(
                 List.of(overhaul),
@@ -116,7 +115,7 @@ class OrderServiceTest {
         Detail detail = new Detail();
         detail.setId(ID_FIRST_ITEM);
         Mockito.when(detailService.getById(ID_FIRST_ITEM)).thenReturn(detail);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.addDetail(order.getId(), detail.getId());
         assertEquals(
                 List.of(detail),
@@ -128,11 +127,10 @@ class OrderServiceTest {
     @Test
     void updateStatus_updatedToNotExisting_notOk() {
         Order order = new Order();
-        order.setId(ID_FIRST_ITEM);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(order);
+        order.setId(ID_FIRST_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         assertThrows(
                 RuntimeException.class,
                 () -> orderService.updateStatus(ID_FIRST_ITEM, STATUS_ORDER_UNEXISTING),
@@ -144,11 +142,10 @@ class OrderServiceTest {
     @Test
     void updateStatus_statusUpdatedToAcceptedForJustCreated_notOk() {
         Order order = new Order();
-        order.setId(ID_FIRST_ITEM);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(order);
+        order.setId(ID_FIRST_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         String statusJustCreatedName = ACCEPTED.name();
         assertThrows(
                 RuntimeException.class,
@@ -162,11 +159,10 @@ class OrderServiceTest {
     @Test
     void updateStatus_updatesAfterCreationCorrectly_ok() {
         Order order = new Order();
-        order.setId(ID_FIRST_ITEM);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(order);
+        order.setId(ID_FIRST_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.updateStatus(ID_FIRST_ITEM, IN_PROGRESS.name());
         assertEquals(IN_PROGRESS, order.getStatus(),
                 "Expected to be able update to valid next status by ordinal (stage) "
@@ -182,12 +178,11 @@ class OrderServiceTest {
         overhaul.setRepairer(repairer);
 
         Order orderSuccessful = new Order();
-        orderSuccessful.setId(ID_FIRST_ITEM);
         orderSuccessful.setOverhauls(List.of(overhaul));
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(orderSuccessful);
+        orderSuccessful.setId(ID_FIRST_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(orderSuccessful);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.updateStatus(ID_FIRST_ITEM, COMPLETED_SUCCESSFULLY.name());
         assertNotNull(orderSuccessful.getCompletionDate(),
                 "Expected completion date to be not null after updating to"
@@ -203,13 +198,12 @@ class OrderServiceTest {
 
         repairer.setCompletedOrders(new LinkedList<>());
         Order orderUnsuccessful = new Order();
-        orderUnsuccessful.setId(ID_SECOND_ITEM);
         orderUnsuccessful.setOverhauls(List.of(overhaul));
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(orderUnsuccessful);
+        orderUnsuccessful.setId(ID_SECOND_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_SECOND_ITEM))
                 .thenReturn(orderUnsuccessful);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.updateStatus(ID_SECOND_ITEM, COMPLETED_UNSUCCESSFULLY.name());
         assertNotNull(orderUnsuccessful.getCompletionDate(),
                 "Expected completion date to be not null after updating to"
@@ -233,12 +227,11 @@ class OrderServiceTest {
         overhaul.setRepairer(repairer);
 
         Order orderSuccessful = new Order();
-        orderSuccessful.setId(ID_FIRST_ITEM);
         orderSuccessful.setOverhauls(List.of(overhaul));
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(orderSuccessful);
+        orderSuccessful.setId(ID_FIRST_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(orderSuccessful);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.updateStatus(ID_FIRST_ITEM, COMPLETED_SUCCESSFULLY.name());
         orderService.updateStatus(ID_FIRST_ITEM, COMPLETED_UNSUCCESSFULLY.name());
         assertEquals(ORDERS_UNCHANGED_SIZE_EXPECTED, repairer.getCompletedOrders().size(),
@@ -251,18 +244,17 @@ class OrderServiceTest {
     @Test
     void updateStatus_updatePaidAddsOrderToCarOwner_ok() {
         Order order = new Order();
-        order.setId(ID_FIRST_ITEM);
         Car car = new Car();
         CarOwner owner = new CarOwner();
         owner.setId(ID_FIRST_ITEM);
         owner.setOrders(new LinkedList<>());
         car.setOwner(owner);
         order.setCar(car);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(false);
         orderService.create(order);
+        order.setId(ID_FIRST_ITEM);
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
         Mockito.when(carOwnerService.getById(ID_FIRST_ITEM)).thenReturn(owner);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         orderService.updateStatus(ID_FIRST_ITEM, PAID.name());
         assertEquals(List.of(order), owner.getOrders(),
                 "Expected car owner done orders list be filled with right orders");
@@ -291,7 +283,8 @@ class OrderServiceTest {
         order.setDetails(List.of(detail));
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.getUserOrdersCount(ID_FIRST_ITEM)).thenReturn(ORDER_COUNT_NORMAL);
         assertEquals(PRICE_BOTH_EXPECTED,
                 orderService.getPrice(ID_FIRST_ITEM),
                 "Expected price to be calculated properly"
@@ -317,7 +310,8 @@ class OrderServiceTest {
         order.setDetails(List.of(detail));
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.getUserOrdersCount(ID_FIRST_ITEM)).thenReturn(ORDER_COUNT_OVER_ACCEPTABLE);
         assertEquals(
                 PRICE_MANY_ORDERS_EXPECTED,
                 orderService.getPrice(ID_FIRST_ITEM),
@@ -333,7 +327,7 @@ class OrderServiceTest {
         order.setDetails(new LinkedList<>());
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         assertEquals(
                 orderService.getPrice(ID_FIRST_ITEM),
                 order.getPrice(),
@@ -349,7 +343,7 @@ class OrderServiceTest {
         order.setDetails(new LinkedList<>());
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
-        Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
+        Mockito.when(orderRepository.existsById(Mockito.any())).thenReturn(true);
         assertEquals(
                 PRICE_DIAGNOSIS_EXPECTED,
                 orderService.getPrice(ID_FIRST_ITEM),
