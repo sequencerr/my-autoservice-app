@@ -95,7 +95,7 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     }
 
     @Override
-    public BigDecimal updateCalculatedPrice(Long id) {
+    public BigDecimal getPrice(Long id) {
         Order order = getById(id);
         order.setPrice(calculate(order));
         return update(order).getPrice();

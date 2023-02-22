@@ -292,8 +292,10 @@ class OrderServiceTest {
         Mockito.when(orderRepository.getReferenceById(ID_FIRST_ITEM)).thenReturn(order);
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
         Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
-        assertEquals(PRICE_BOTH_EXPECTED, orderService.updateCalculatedPrice(ID_FIRST_ITEM),
-                "Expected price to be calculated properly");
+        assertEquals(PRICE_BOTH_EXPECTED,
+                orderService.getPrice(ID_FIRST_ITEM),
+                "Expected price to be calculated properly"
+        );
     }
 
     @Test
@@ -318,7 +320,7 @@ class OrderServiceTest {
         Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
         assertEquals(
                 PRICE_MANY_ORDERS_EXPECTED,
-                orderService.updateCalculatedPrice(ID_FIRST_ITEM),
+                orderService.getPrice(ID_FIRST_ITEM),
                 "Expected price to be calculated properly"
         );
     }
@@ -333,7 +335,7 @@ class OrderServiceTest {
         Mockito.when(orderRepository.save(Mockito.any(Order.class))).thenReturn(order);
         Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
         assertEquals(
-                orderService.updateCalculatedPrice(ID_FIRST_ITEM),
+                orderService.getPrice(ID_FIRST_ITEM),
                 order.getPrice(),
                 "Expected to update order's price field after calculating"
         );
@@ -350,7 +352,7 @@ class OrderServiceTest {
         Mockito.when(orderRepository.exists(Mockito.any())).thenReturn(true);
         assertEquals(
                 PRICE_DIAGNOSIS_EXPECTED,
-                orderService.updateCalculatedPrice(ID_FIRST_ITEM),
+                orderService.getPrice(ID_FIRST_ITEM),
                 "Expected to return and update price to fixed diagnosis price");
     }
 }

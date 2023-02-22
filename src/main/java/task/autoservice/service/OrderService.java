@@ -11,5 +11,5 @@ public interface OrderService extends GenericService<Order> {
 
     void updateStatus(Long id, String status);
 
-    BigDecimal updateCalculatedPrice(Long id);
+    BigDecimal getPrice(Long id);
 }
