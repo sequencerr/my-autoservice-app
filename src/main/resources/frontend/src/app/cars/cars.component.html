@@ -1,0 +1,128 @@
+<h4>Create Car</h4>
+<form #formCreate (ngSubmit)="create(); formCreate.reset()">
+	<input
+		name="brandCreate"
+		#brandCreate="ngModel"
+		[(ngModel)]="formModelCreate.brand"
+		name=""
+		type="text"
+		required
+		placeholder="Car's brand"
+	/>
+	<input
+		name="modelCreate"
+		#modelCreate="ngModel"
+		[(ngModel)]="formModelCreate.model"
+		type="text"
+		required
+		placeholder="Car's model"
+	/>
+	<input
+		name="productionYearCreate"
+		#productionYearCreate="ngModel"
+		[(ngModel)]="formModelCreate.productionYear"
+		type="date"
+		required
+		placeholder="Production Year"
+	/>
+	<input
+		name="numberPlateCreate"
+		#numberPlateCreate="ngModel"
+		type="text"
+		[(ngModel)]="formModelCreate.numberPlate"
+		required
+		placeholder="Number plate"
+	/>
+	<input
+		name="ownerIdCreate"
+		#ownerIdCreate="ngModel"
+		[(ngModel)]="formModelCreate.ownerId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Owner Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button
+		[disabled]="
+			brandCreate.invalid ||
+			modelCreate.invalid ||
+			productionYearCreate.invalid ||
+			numberPlateCreate.invalid ||
+			ownerIdCreate.invalid
+		"
+		type="submit"
+	>
+		Create car
+	</button>
+</form>
+
+<h4>Update Car</h4>
+<form #formUpdate (ngSubmit)="create(); formUpdate.reset()">
+	<input
+		name="carIdUpdate"
+		#carIdUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.id"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Car Id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="brandUpdate"
+		#brandUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.brand"
+		name=""
+		type="text"
+		required
+		placeholder="Car's brand"
+	/>
+	<input
+		name="modelUpdate"
+		#modelUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.model"
+		type="text"
+		required
+		placeholder="Car's model"
+	/>
+	<input
+		name="productionYearUpdate"
+		#productionYearUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.productionYear"
+		type="date"
+		required
+		placeholder="Production Year"
+	/>
+	<input
+		name="numberPlateUpdate"
+		#numberPlateUpdate="ngModel"
+		type="text"
+		[(ngModel)]="formModelUpdate.numberPlate"
+		required
+		placeholder="Number plate"
+	/>
+	<input
+		name="ownerIdUpdate"
+		#ownerIdUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.ownerId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Owner Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button
+		[disabled]="
+			carIdUpdate.invalid ||
+			brandUpdate.invalid ||
+			modelUpdate.invalid ||
+			productionYearUpdate.invalid ||
+			numberPlateUpdate.invalid ||
+			ownerIdUpdate.invalid
+		"
+		type="submit"
+	>
+		Update car
+	</button>
+</form>

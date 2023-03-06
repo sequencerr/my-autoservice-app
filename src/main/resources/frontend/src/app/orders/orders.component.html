@@ -1,0 +1,131 @@
+<h4>Create order</h4>
+<form #formCreate (ngSubmit)="create(); formCreate.reset()">
+	<input
+		name="descriptionCreate"
+		#descriptionCreate
+		[(ngModel)]="formModelCreate.description"
+		type="text"
+		placeholder="Description"
+	/>
+	<input
+		name="carIdCreate"
+		#carIdCreate="ngModel"
+		[(ngModel)]="formModelCreate.carId"
+		type="text"
+		[pattern]="idPattern"
+		placeholder="Car Id"
+		required
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="carIdCreate.invalid" type="submit">Add order</button>
+</form>
+
+<h4>Update order</h4>
+<form #formUpdate (ngSubmit)="update(); formUpdate.reset()">
+	<input
+		name="orderIdUpdate"
+		#orderIdUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.id"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Order Id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="descriptionUpdate"
+		#descriptionUpdate
+		[(ngModel)]="formModelUpdate.description"
+		type="text"
+		placeholder="Description"
+	/>
+	<label for="statusUpdate">Status: </label>
+	<select
+		name="statusUpdate"
+		#selectElem
+		#statusUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.status"
+	>
+		<option [ngValue]="undefined">Leave unchanged</option>
+		<option *ngFor="let s of statuses" [ngValue]="s">{{ s.split('_').join(' ') }}</option>
+	</select>
+	<button
+		[disabled]="
+			orderIdUpdate.invalid ||
+			(descriptionUpdate.value == '' && statusUpdate.value === undefined)
+		"
+		type="submit"
+	>
+		Update order
+	</button>
+</form>
+
+<h4>Add overhaul to order</h4>
+<form #formAddOverhaul (ngSubmit)="addOverhaul()">
+	<input
+		name="orderIdAddOverhaul"
+		#orderIdAddOverhaul="ngModel"
+		[(ngModel)]="formModelAddOverhaul.orderId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Order Id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="overhaulIdAddOverhaul"
+		#overhaulIdAddOverhaul="ngModel"
+		[(ngModel)]="formModelAddOverhaul.overhaulId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Overhaul Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="orderIdAddOverhaul.invalid || overhaulIdAddOverhaul.invalid" type="submit">
+		Add overhaul
+	</button>
+</form>
+
+<h4>Add detail to order</h4>
+<form #formAddDetail (ngSubmit)="addDetail()">
+	<input
+		name="orderIdAddDetail"
+		#orderIdAddDetail="ngModel"
+		[(ngModel)]="formModelAddDetail.orderId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Order Id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="DetailIdAddDetail"
+		#DetailIdAddDetail="ngModel"
+		[(ngModel)]="formModelAddDetail.detailId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Detail Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="orderIdAddDetail.invalid || DetailIdAddDetail.invalid" type="submit">
+		Add Detail
+	</button>
+</form>
+
+<h4>Get order's price by it's id</h4>
+<form #formGetPrice (ngSubmit)="getPrice(); formGetPrice.reset()">
+	<input
+		name="orderId"
+		#orderId="ngModel"
+		[(ngModel)]="formModelGetPrice.id"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Order Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="orderId.invalid" type="submit">Get price</button>
+</form>
+<div [innerText]="priceDisplay" [hidden]="priceDisplay === undefined"></div>

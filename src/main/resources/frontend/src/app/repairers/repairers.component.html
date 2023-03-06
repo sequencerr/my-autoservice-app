@@ -1,0 +1,78 @@
+<h4>Create repairer</h4>
+<form #formCreate (ngSubmit)="create(); formCreate.reset()">
+	<input
+		name="fullNameCreate"
+		#fullNameCreate="ngModel"
+		[(ngModel)]="formModelCreate.id"
+		type="text"
+		required
+		placeholder="Repairer's name"
+	/>
+	<button [disabled]="fullNameCreate.invalid" type="submit">Create repairer</button>
+</form>
+
+<h4>Update repairer</h4>
+<form #formUpdate (ngSubmit)="update(); formUpdate.reset()">
+	<input
+		name="idUpdate"
+		#idUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.id"
+		type="text"
+		required
+		placeholder="Repairer's id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="fullNameUpdate"
+		#fullNameUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.fullName"
+		type="text"
+		required
+		placeholder="Repairer's name"
+	/>
+	<button [disabled]="idUpdate.invalid || fullNameUpdate.invalid" type="submit">
+		Update repairer
+	</button>
+</form>
+
+<h4>Get repairer's orders</h4>
+<form #formGetOrders (ngSubmit)="update(); formGetOrders.reset()">
+	<input
+		name="idGetOrders"
+		#idGetOrders="ngModel"
+		[(ngModel)]="formModelGetOrders.id"
+		type="text"
+		required
+		placeholder="Repairer's id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="idGetOrders.invalid" type="submit">Get orders</button>
+</form>
+<table [hidden]="ordersDisplay == undefined || !ordersDisplay.length">
+	<tr *ngFor="let o of ordersDisplay">
+		<td>{{ o.id }}</td>
+		<td>{{ o.description }}</td>
+		<td>{{ o.price | number }}</td>
+		<td>{{ o.acceptationDate | date }}</td>
+		<td>{{ o.completionDate | date }}</td>
+		<td>{{ o.status }}</td>
+		<td>{{ o.carId }}</td>
+		<td>{{ o.overhaulIds | json }}</td>
+		<td>{{ o.detailIds | json }}</td>
+	</tr>
+</table>
+
+<h4>Get repairer's salary</h4>
+<form #formGetOrders (ngSubmit)="update(); formGetOrders.reset()">
+	<input
+		name="idGetOrders"
+		#idGetOrders="ngModel"
+		[(ngModel)]="formModelGetOrders.id"
+		type="text"
+		required
+		placeholder="Repairer's id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="idGetOrders.invalid" type="submit">Get salary</button>
+</form>
+<div [innerText]="salaryDisplay" [hidden]="salaryDisplay == undefined"></div>

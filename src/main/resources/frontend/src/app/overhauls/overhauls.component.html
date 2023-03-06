@@ -1,0 +1,95 @@
+<h4>Create Overhaul</h4>
+<form #formCreate (ngSubmit)="create(); formCreate.reset()">
+	<input
+		name="priceCreate"
+		#priceCreate="ngModel"
+		[(ngModel)]="formModelCreate.price"
+		type="text"
+		[pattern]="pricePattern"
+		required
+		placeholder="Overhaul's price"
+		(input)="handlePriceInput($event)"
+	/>
+	<input
+		name="orderIdCreate"
+		#orderIdCreate="ngModel"
+		[(ngModel)]="formModelCreate.orderId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Overhaul's order id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="repairerIdCreate"
+		#repairerIdCreate="ngModel"
+		[(ngModel)]="formModelCreate.repairerId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Overhaul's repairer id"
+		(input)="handleIdInput($event)"
+	/>
+	<button
+		[disabled]="orderIdCreate.invalid || repairerIdCreate.invalid || priceCreate.invalid"
+		type="submit"
+	>
+		Create overhaul
+	</button>
+</form>
+
+<h4>Update Overhaul</h4>
+<form #formUpdate (ngSubmit)="create(); formUpdate.reset()">
+	<input
+		name="idUpdate"
+		#idUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.id"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Overhaul's id"
+		(input)="handleIdInput($event)"
+	/>
+
+	<input
+		name="priceUpdate"
+		#priceUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.price"
+		type="text"
+		[pattern]="pricePattern"
+		required
+		placeholder="Overhaul's price"
+		(input)="handlePriceInput($event)"
+	/>
+	<input
+		name="orderIdUpdate"
+		#orderIdUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.orderId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Overhaul's order id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="repairerIdUpdate"
+		#repairerIdUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.repairerId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Overhaul's repairer id"
+		(input)="handleIdInput($event)"
+	/>
+	<button
+		[disabled]="
+			idUpdate.invalid ||
+			orderIdUpdate.invalid ||
+			repairerIdUpdate.invalid ||
+			priceUpdate.invalid
+		"
+		type="submit"
+	>
+		Update overhaul
+	</button>
+</form>

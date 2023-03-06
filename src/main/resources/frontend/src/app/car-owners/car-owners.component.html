@@ -1,0 +1,57 @@
+<h4>Create car owner</h4>
+<form (ngSubmit)="create()">
+	<button name="button" type="submit">Create one</button>
+</form>
+
+<h4>Register car for owner</h4>
+<form #formAddCar (ngSubmit)="addCar(); formAddCar.reset()">
+	<input
+		name="orderIdCreate"
+		#orderIdCreate="ngModel"
+		[(ngModel)]="formModelAddCar.carOwnerId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Order Id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="carIdCreate"
+		#carId="ngModel"
+		[(ngModel)]="formModelAddCar.carId"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Car Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="orderIdCreate.invalid || carId.invalid" type="submit">Add car</button>
+</form>
+
+<h4>Get owner's completed orders</h4>
+<form #formGetOrders (ngSubmit)="getOrders(); formGetOrders.reset()">
+	<input
+		name="orderIdGetOrders"
+		#orderIdGetOrders="ngModel"
+		[(ngModel)]="formModelGetOrders.id"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Order Id"
+		(input)="handleIdInput($event)"
+	/>
+	<button [disabled]="orderIdGetOrders.invalid" type="submit">Get orders</button>
+</form>
+<table [hidden]="ordersDisplay == undefined || !ordersDisplay.length">
+	<tr *ngFor="let o of ordersDisplay">
+		<td>{{ o.id }}</td>
+		<td>{{ o.description }}</td>
+		<td>{{ o.price | number }}</td>
+		<td>{{ o.acceptationDate | date }}</td>
+		<td>{{ o.completionDate | date }}</td>
+		<td>{{ o.status }}</td>
+		<td>{{ o.carId }}</td>
+		<td>{{ o.overhaulIds | json }}</td>
+		<td>{{ o.detailIds | json }}</td>
+	</tr>
+</table>

@@ -1,0 +1,62 @@
+<h4>Create Detail</h4>
+<form #formCreate (ngSubmit)="create(); formCreate.reset()">
+	<input
+		name="nameCreate"
+		#nameCreate="ngModel"
+		[(ngModel)]="formModelCreate.name"
+		type="text"
+		required
+		placeholder="Detail's name"
+	/>
+	<input
+		name="priceCreate"
+		#priceCreate="ngModel"
+		[(ngModel)]="formModelCreate.price"
+		type="text"
+		[pattern]="pricePattern"
+		required
+		placeholder="Detail's price"
+		(input)="handlePriceInput($event)"
+	/>
+	<button [disabled]="nameCreate.invalid || priceCreate.invalid" type="submit">
+		Create detail
+	</button>
+</form>
+
+<h4>Update Detail</h4>
+<form #formUpdate (ngSubmit)="create(); formUpdate.reset()">
+	<input
+		name="idUpdate"
+		#idUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.id"
+		type="text"
+		[pattern]="idPattern"
+		required
+		placeholder="Detail's id"
+		(input)="handleIdInput($event)"
+	/>
+	<input
+		name="nameUpdate"
+		#nameUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.name"
+		type="text"
+		required
+		placeholder="Detail's name"
+	/>
+	<input
+		name="priceUpdate"
+		#priceUpdate="ngModel"
+		[(ngModel)]="formModelUpdate.price"
+		type="text"
+		[pattern]="pricePattern"
+		required
+		placeholder="Detail's price"
+		(input)="handlePriceInput($event)"
+	/>
+	<button
+		[disabled]="idUpdate.invalid || nameUpdate.invalid || priceUpdate.invalid"
+		type="submit"
+	>
+		Update detail
+	</button>
+</form>

@@ -1,4 +1,10 @@
 target
+static
 .idea
+*.iml
+.vscode
+.angular
 .mvn
 !.mvn/wrapper/maven-wrapper.properties
+node_modules/
+yarn.lock
