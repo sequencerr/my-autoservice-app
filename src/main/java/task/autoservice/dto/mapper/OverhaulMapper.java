@@ -24,7 +24,6 @@ public class OverhaulMapper implements
     public Overhaul toModel(OverhaulRequestDto requestDto) {
         Overhaul service = new Overhaul();
         service.setPrice(requestDto.price());
-        service.setIsPaid(requestDto.isPaid());
         service.setOrder(orderService.getById(requestDto.orderId()));
         service.setRepairer(repairerService.getById(requestDto.repairerId()));
         return service;
