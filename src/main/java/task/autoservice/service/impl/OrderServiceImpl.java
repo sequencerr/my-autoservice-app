@@ -16,6 +16,7 @@ import task.autoservice.service.RepairerService;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -54,6 +55,8 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     public Order create(Order order) {
         order.setAcceptationDate(LocalDateTime.now());
         order.setStatus(ACCEPTED);
+        if (order.getOverhauls() == null) order.setOverhauls(Collections.emptyList());
+        if (order.getDetails() == null) order.setDetails(Collections.emptyList());
         return super.create(order);
     }
 

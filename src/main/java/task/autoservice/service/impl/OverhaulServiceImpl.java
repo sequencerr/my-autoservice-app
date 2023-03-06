@@ -19,6 +19,12 @@ public class OverhaulServiceImpl extends GenericServiceImpl<Overhaul>
     }
 
     @Override
+    public Overhaul create(Overhaul overhaul) {
+        overhaul.setIsPaid(false);
+        return super.create(overhaul);
+    }
+
+    @Override
     public List<Overhaul> getOverhaulsToPay(Long repairerId) {
         return repository.getOverhaulsByRepairerAndOrderStatus(repairerId, OrderStatus.PAID);
     }

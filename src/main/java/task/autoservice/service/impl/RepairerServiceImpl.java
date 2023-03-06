@@ -8,6 +8,7 @@ import task.autoservice.service.OverhaulService;
 import task.autoservice.service.RepairerService;
 
 import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -21,6 +22,14 @@ public class RepairerServiceImpl extends GenericServiceImpl<Repairer> implements
     ) {
         super(repository);
         this.overhaulService = overhaulService;
+    }
+
+    @Override
+    public Repairer create(Repairer repairer) {
+        if (repairer.getCompletedOrders() == null) {
+            repairer.setCompletedOrders(Collections.emptyList());
+        }
+        return super.create(repairer);
     }
 
     @Override

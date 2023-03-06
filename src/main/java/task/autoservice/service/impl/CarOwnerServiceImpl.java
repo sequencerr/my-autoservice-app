@@ -7,6 +7,8 @@ import task.autoservice.model.CarOwner;
 import task.autoservice.service.CarOwnerService;
 import task.autoservice.service.GenericService;
 
+import java.util.Collections;
+
 @Service
 public class CarOwnerServiceImpl extends GenericServiceImpl<CarOwner> implements CarOwnerService {
     private final GenericService<Car> carService;
@@ -16,6 +18,13 @@ public class CarOwnerServiceImpl extends GenericServiceImpl<CarOwner> implements
             GenericService<Car> carService) {
         super(repository);
         this.carService = carService;
+    }
+
+    @Override
+    public CarOwner create(CarOwner carOwner) {
+        if (carOwner.getCars() == null) carOwner.setCars(Collections.emptyList());
+        if (carOwner.getOrders() == null) carOwner.setOrders(Collections.emptyList());
+        return super.create(carOwner);
     }
 
     @Override
