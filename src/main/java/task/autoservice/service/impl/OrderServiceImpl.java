@@ -1,6 +1,5 @@
 package task.autoservice.service.impl;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Service;
 import task.autoservice.model.CarOwner;
 import task.autoservice.model.Detail;
@@ -8,6 +7,7 @@ import task.autoservice.model.Order;
 import task.autoservice.model.Order.OrderStatus;
 import task.autoservice.model.Overhaul;
 import task.autoservice.model.Repairer;
+import task.autoservice.repository.OrderRepository;
 import task.autoservice.service.CarOwnerService;
 import task.autoservice.service.GenericService;
 import task.autoservice.service.OrderService;
@@ -32,19 +32,21 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     private static final double DISCOUNT_PERCENTAGE_PER_DETAIL = 0.01;
     private static final BigDecimal ONLY_DIAGNOSE_PRICE = BigDecimal.valueOf(500);
     private static final int MAX_COUNT_MULTIPLIER = 20;
+    protected final OrderRepository repository;
     private final GenericService<Detail> detailService;
     private final OverhaulService overhaulService;
     private final RepairerService repairerService;
     private final CarOwnerService carOwnerService;
 
     public OrderServiceImpl(
-            JpaRepository<Order, Long> repository,
+            OrderRepository repository,
             GenericService<Detail> detailService,
             OverhaulService overhaulService,
             RepairerService repairerService,
             CarOwnerService carOwnerService
     ) {
         super(repository);
+        this.repository = repository;
         this.detailService = detailService;
         this.overhaulService = overhaulService;
         this.repairerService = repairerService;
@@ -100,7 +102,9 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
     @Override
     public BigDecimal getPrice(Long id) {
         Order order = getById(id);
-        order.setPrice(calculate(order));
+        BigDecimal calculated = calculatePrice(order);
+        if (calculated.equals(order.getPrice())) return calculated;
+        order.setPrice(calculated);
         return update(order).getPrice();
     }
 
@@ -115,12 +119,12 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
         }
     }
 
-    private BigDecimal calculate(Order order) {
+    private BigDecimal calculatePrice(Order order) {
         if (order.getOverhauls().isEmpty() && order.getDetails().isEmpty()) {
             return ONLY_DIAGNOSE_PRICE;
         }
 
-        int ordersCount = order.getCar().getOwner().getOrders().size();
+        int ordersCount = repository.getUserOrdersCount(order.getId());
         if (ordersCount > MAX_COUNT_MULTIPLIER) ordersCount = MAX_COUNT_MULTIPLIER;
 
         BigDecimal discountPerOverhaul =
@@ -129,11 +133,11 @@ public class OrderServiceImpl extends GenericServiceImpl<Order> implements Order
                 BigDecimal.valueOf(ordersCount * DISCOUNT_PERCENTAGE_PER_DETAIL);
 
         BigDecimal accumulator = BigDecimal.ZERO;
-        for (Detail detail : order.getDetails()) {
-            accumulator = accumulator.add(detail.getPrice().subtract(discountPerDetail));
-        }
         for (Overhaul overhaul : order.getOverhauls()) {
             accumulator = accumulator.add(overhaul.getPrice().subtract(discountPerOverhaul));
+        }
+        for (Detail detail : order.getDetails()) {
+            accumulator = accumulator.add(detail.getPrice().subtract(discountPerDetail));
         }
         return accumulator;
     }
