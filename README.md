@@ -41,11 +41,7 @@ Auto Service is a Java based web application that users to place orders for car 
 3. 
    - Simple approach:
      - Install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
-     - Run following commands: 
-     ```
-     ./mvnw -DskipTests=true clean package
-     docker compose up --build
-     ```
+     - Run following command: `docker compose up --build`
    - DIY approach:
      - Set up a local [PostgreSQL](https://www.postgresql.org/download/) server.
      - Set `JAVA_HOME` environment variable in your system that navigates to directory of your [installed JDK](https://www.oracle.com/java/technologies/javase/jdk17-archive-downloads.html).
