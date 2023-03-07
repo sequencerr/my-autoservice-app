@@ -40,9 +40,7 @@
 									"maximumError": "2kb"
 								}
 							],
-							"aot": false,
 							"outputHashing": "all",
-							"buildOptimizer": true,
 							"extractLicenses": true,
 							"optimization": {
 								"scripts": true,
