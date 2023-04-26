@@ -9,6 +9,8 @@ Auto Service is a Java based web application that users to place orders for car 
     * [Set-up and Running the Project](#set-up-and-running-the-project)
 <!-- TOC -->
 
+![Front-end Preview Image](https://i.imgur.com/wI8otqO.png "Preview")
+
 ### Features
 
 - Swagger API documentation
